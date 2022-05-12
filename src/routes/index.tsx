@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import AppLayout from '../layouts/AppLayout';
-import HomePage from '../pages/HomePage';
+import HomePage from '../pages/home/HomePage';
 import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
 
@@ -62,10 +62,4 @@ const Routes: React.FC = () =>
     },
   ]);
 
-const Router: React.FC = () => (
-  <BrowserRouter>
-    <Routes />
-  </BrowserRouter>
-);
-
-export default Router;
+export default Routes;

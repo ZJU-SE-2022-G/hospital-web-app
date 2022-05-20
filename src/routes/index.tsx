@@ -4,6 +4,8 @@ import AppLayout from '../layouts/AppLayout';
 import HomePage from '../pages/home/HomePage';
 import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
+import DepartmentInfoPage from '../pages/departments/DepartmentInfoPage'
+import DepartmentListPage from '../pages/departments/DepartmentListPage';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -50,7 +52,10 @@ const Routes: React.FC = () =>
         },
         {
           path: 'departments',
-          children: [{ index: true }, { path: ':departmentId' }],
+          children: [
+            { index: true, element: <DepartmentListPage /> },
+            { path: ':departmentId', element: <DepartmentInfoPage /> }
+          ],
         },
         { path: 'doctors', children: [{ index: true }, { path: ':doctorId' }] },
         {

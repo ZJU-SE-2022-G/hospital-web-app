@@ -27,8 +27,8 @@ const AppHeader: React.FC = () => {
       <Space>
         <img src="/src/assets/favicon.svg" height="50" />
         <div className={styles.titleWrapper}>
-          <span className={styles.title}>SE-医疗管理系统</span>
-          <span className={styles.subTitle}>SE-Medical Management System</span>
+          <span className={styles.title}>医院网上预约系统</span>
+          <span className={styles.subTitle}>Hospital Reservation System</span>
         </div>
       </Space>
       <Space>

@@ -1,5 +1,5 @@
 import React from 'react';
 
-const UserListPage: React.FC = () => <span>User Info Page</span>;
+const UserInfoPage: React.FC = () => <span>User Info Page</span>;
 
-export default UserListPage;
+export default UserInfoPage;

@@ -1,14 +1,9 @@
 import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { Layout, Menu, MenuProps } from 'antd';
+import { MenuProps } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import styles from './DepartmentListPage.module.css';
-
-const { Content, Sider } = Layout;
+import MenuContentView from '../../components/MenuContentView';
 
 const DepartmentListPage: React.FC = () => {
-  const navigate = useNavigate();
-
   const items: MenuProps['items'] = [
     { key: 'index', label: '科室首页' },
     {
@@ -22,21 +17,7 @@ const DepartmentListPage: React.FC = () => {
     },
   ];
 
-  return (
-    <Layout className={styles.layout}>
-      <Sider className={styles.sider}>
-        <Menu
-          items={items}
-          onClick={e =>
-            navigate(`/departments/${e.key === 'index' ? '' : e.key}`)
-          }
-        />
-      </Sider>
-      <Content className={styles.content}>
-        <Outlet />
-      </Content>
-    </Layout>
-  );
+  return <MenuContentView route="/departments" menuItems={items} />;
 };
 
 export default DepartmentListPage;

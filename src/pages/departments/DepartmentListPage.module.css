@@ -1,6 +1,11 @@
-.menu {
-    height: 100%;
+.layout {
+  height: 100%;
 }
+
+.sider {
+  background: #ffffff;
+}
+
 .content {
-    padding: 2rem 2rem;
+  padding: 2rem;
 }

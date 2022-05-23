@@ -1,41 +1,42 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { Layout, Menu, MenuProps } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './DepartmentListPage.module.css'
+import styles from './DepartmentListPage.module.css';
 
 const { Content, Sider } = Layout;
 
-const departmentList = [...new Array(10).keys()].map(
-    (index) => (
-        <Menu.Item key={`${index}`} icon={React.createElement(UserOutlined)}>
-            <Link to={`/departments/${index}`}>
-                department {index}
-            </Link>
-        </Menu.Item>
-    ));
-
 const DepartmentListPage: React.FC = () => {
-    const navigate = useNavigate();
-    const handleClick = () => navigate("/departments");
-    return (
-        <Layout>
-            <Sider>
-                <Menu
-                    mode="inline"
-                    className={styles.menu}
-                >
-                    <Menu.Item key="index" onClick={handleClick}>
-                        <span> 科室首页 </span>
-                    </Menu.Item>
-                    { departmentList }
-                </Menu>
-            </Sider>
-            <Content className={styles.content}>
-                Content Start
-            </Content>
-        </Layout>
-    );
+  const navigate = useNavigate();
+
+  const items: MenuProps['items'] = [
+    { key: 'index', label: '科室首页' },
+    {
+      type: 'group',
+      label: '科室列表',
+      children: [...new Array(10).keys()].map(index => ({
+        key: index,
+        label: `Department ${index}`,
+        icon: <UserOutlined />,
+      })),
+    },
+  ];
+
+  return (
+    <Layout className={styles.layout}>
+      <Sider className={styles.sider}>
+        <Menu
+          items={items}
+          onClick={e =>
+            navigate(`/departments/${e.key === 'index' ? '' : e.key}`)
+          }
+        />
+      </Sider>
+      <Content className={styles.content}>
+        <Outlet />
+      </Content>
+    </Layout>
+  );
 };
 
 export default DepartmentListPage;

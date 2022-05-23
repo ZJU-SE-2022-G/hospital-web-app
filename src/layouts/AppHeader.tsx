@@ -1,5 +1,6 @@
 import React from 'react';
-import { Layout, Space, Button, Menu, Dropdown } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Layout, Row, Col, Space, Button, Menu, Dropdown } from 'antd';
 import {
   SearchOutlined,
   UserOutlined,
@@ -10,6 +11,8 @@ import styles from './AppHeader.module.css';
 const { Header } = Layout;
 
 const AppHeader: React.FC = () => {
+  const navigate = useNavigate();
+
   const menu = (
     <Menu
       items={[
@@ -24,19 +27,37 @@ const AppHeader: React.FC = () => {
 
   return (
     <Header className={styles.header}>
-      <Space>
-        <img src="/src/assets/favicon.svg" height="50" />
-        <div className={styles.titleWrapper}>
-          <span className={styles.title}>SE-医疗管理系统</span>
-          <span className={styles.subTitle}>SE-Medical Management System</span>
-        </div>
-      </Space>
-      <Space>
-        <Button shape="circle" size="middle" icon={<SearchOutlined />} ghost />
-        <Dropdown overlay={menu}>
-          <Button shape="circle" size="middle" icon={<UserOutlined />} ghost />
-        </Dropdown>
-      </Space>
+      <Row>
+        <Col span="18">
+          <Space className={styles.link} onClick={() => navigate('/')}>
+            <img src="/src/assets/favicon.svg" height="50" />
+            <div className={styles.titleWrapper}>
+              <span className={styles.title}>SE-医疗管理系统</span>
+              <span className={styles.subTitle}>
+                SE-Medical Management System
+              </span>
+            </div>
+          </Space>
+        </Col>
+        <Col className={styles.buttons} span="6">
+          <Space>
+            <Button
+              shape="circle"
+              size="middle"
+              icon={<SearchOutlined />}
+              ghost
+            />
+            <Dropdown overlay={menu}>
+              <Button
+                shape="circle"
+                size="middle"
+                icon={<UserOutlined />}
+                ghost
+              />
+            </Dropdown>
+          </Space>
+        </Col>
+      </Row>
     </Header>
   );
 };

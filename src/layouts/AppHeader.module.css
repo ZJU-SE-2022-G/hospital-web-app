@@ -1,11 +1,13 @@
 .header {
   height: unset;
   padding: 10px 50px;
-  display: flex;
-  justify-content: space-between;
   line-height: unset;
   color: #ffffff;
   background: #6e3cbc;
+}
+
+.link {
+  cursor: pointer;
 }
 
 .titleWrapper {
@@ -21,4 +23,10 @@
 
 .subTitle {
   font-size: 12px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

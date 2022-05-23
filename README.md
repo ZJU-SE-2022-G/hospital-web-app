@@ -34,7 +34,7 @@ yarn dev --host
 
 这时可以在 http://localhost:3000 访问网站，所有代码更改将会即时更新。
 
-**注意：开发前请先新建分支（可以用自己的用户名作为分支名），在新分支上开发，不要随便合并到 master 分支。**
+**注意：开发前请先新建分支（可以用 _自己的用户名/要开发的页面名_ 作为分支名，如 username/homepage），在新分支上开发，不要随便合并到 master 分支。**
 
 ## src 文件目录结构
 
@@ -48,7 +48,6 @@ yarn dev --host
 - stores：全局状态管理
 - utils：工具方法
 - App.tsx：应用入口
-- favicon.svg：应用图标
 - index.css：全局样式
 - main.tsx：React 入口
 

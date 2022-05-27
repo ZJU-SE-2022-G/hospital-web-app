@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuProps } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UsergroupAddOutlined } from '@ant-design/icons';
 import MenuContentView from '../../components/MenuContentView';
 
 const DepartmentListPage: React.FC = () => {
@@ -12,7 +12,7 @@ const DepartmentListPage: React.FC = () => {
       children: [...new Array(10).keys()].map(index => ({
         key: index,
         label: `Department ${index}`,
-        icon: <UserOutlined />,
+        icon: <UsergroupAddOutlined />,
       })),
     },
   ];

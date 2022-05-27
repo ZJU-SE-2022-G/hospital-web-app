@@ -6,6 +6,10 @@ import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
 import DepartmentInfo from '../pages/departments/DepartmentInfo';
+import DoctorListPage from '../pages/doctors/DoctorListPage';
+import DoctorInfo from '../pages/doctors/DoctorInfo';
+import IllnessListPage from '../pages/illnesses/IllnessListPage';
+import IllnessInfo from '../pages/illnesses/IllnessInfo';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -58,10 +62,21 @@ const Routes: React.FC = () =>
             { path: ':departmentId', element: <DepartmentInfo /> },
           ],
         },
-        { path: 'doctors', children: [{ index: true }, { path: ':doctorId' }] },
+        {
+          path: 'doctors', 
+          element: <DoctorListPage />,
+          children: [
+            { index: true, element: <span>请选择医生</span> },
+            { path: ':doctorId', element: <DoctorInfo /> },
+          ],
+        },
         {
           path: 'illnesses',
-          children: [{ index: true }, { path: ':illnessId' }],
+          element: <IllnessListPage />,
+          children: [
+            { index: true, element: <span>请选择病情</span>},
+            { path: ':illnessId', element: <IllnessInfo />},
+          ],
         },
         { path: '*' },
       ],

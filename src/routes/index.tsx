@@ -28,10 +28,10 @@ const Routes: React.FC = () =>
           path: 'reserves',
           children: [{ index: true }, { path: ':reserveId' }],
         },
-        { path: 'nofity' },
+        { path: 'notice' },
         {
-          path: 'notifications',
-          children: [{ index: true }, { path: ':notificationId' }],
+          path: 'notices',
+          children: [{ index: true }, { path: ':noticeId' }],
         },
         { path: 'help', children: [{ index: true }, { path: ':helpId' }] },
         { path: 'feedback' },

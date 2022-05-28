@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Carousel, Space } from 'antd';
+import NavigateButton from '../../components/NavigateButton';
 import styles from './HomePage.module.css';
 
 const HomePage: React.FC = () => {
@@ -22,16 +23,37 @@ const HomePage: React.FC = () => {
       </Row>
       <Row>
         <Col className={styles.content} span="24">
-          院内公告
+          <div className={styles.noticeOuterWrapper}>
+            <div className={styles.noticeInnerWrapper}>
+              <div>院内通知</div>
+              <div></div>
+            </div>
+          </div>
         </Col>
       </Row>
       <Row>
         <Col className={styles.content} span="24">
-          <Space>
-            <div>专家介绍</div>
-            <div>科室介绍</div>
-            <div>院内介绍</div>
-            <div>门诊预约</div>
+          <Space size="large">
+            <NavigateButton
+              href="/doctors"
+              label="专家介绍"
+              imgSrc="/src/assets/home/doctor.svg"
+            />
+            <NavigateButton
+              href="/departments"
+              label="科室介绍"
+              imgSrc="/src/assets/home/department.svg"
+            />
+            <NavigateButton
+              href="/notices"
+              label="院内公告"
+              imgSrc="/src/assets/home/notice.svg"
+            />
+            <NavigateButton
+              href="/reserve"
+              label="门诊预约"
+              imgSrc="/src/assets/home/reserve.svg"
+            />
           </Space>
         </Col>
       </Row>

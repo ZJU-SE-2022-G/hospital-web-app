@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Carousel, Space } from 'antd';
-import styles from './Homepage.module.css';
+import styles from './HomePage.module.css';
 
 const HomePage: React.FC = () => {
   const imgs = ['carousel1.png', 'carousel1.png'];

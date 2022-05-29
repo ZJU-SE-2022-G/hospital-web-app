@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #000000;
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 2px 2px 8px #aaaaaa;
@@ -18,8 +17,6 @@
   border-radius: 50%;
 }
 
-.label {
-  margin-top: 10px;
-  font-size: 20px;
-  font-weight: 600;
+.button .label {
+  margin: 10px 0px 0px 0px;
 }

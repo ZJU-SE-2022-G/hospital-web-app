@@ -13,8 +13,22 @@
 }
 
 .noticeInnerWrapper {
-  width: 80%;
+  width: 60%;
   height: 60px;
+  display: flex;
+  align-items: center;
   background: #ffffff;
   border-radius: 10px;
+}
+
+.noticeInnerWrapper .noticeTitle {
+  margin: 0px 20px;
+}
+
+.noticeList {
+  flex: auto;
+}
+
+.noticeList .noticeItem {
+  padding: 1px 20px 1px 0px;
 }

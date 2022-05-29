@@ -1,7 +1,17 @@
 import React from 'react';
-import { Row, Col, Carousel, Space } from 'antd';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { Row, Col, Carousel, List, Typography, Tag, Space } from 'antd';
 import NavigateButton from '../../components/NavigateButton';
 import styles from './HomePage.module.css';
+
+const { Title, Text } = Typography;
+
+interface Notice {
+  id: number;
+  title: string;
+  date: Date;
+}
 
 const HomePage: React.FC = () => {
   const imgs = ['carousel1.png', 'carousel1.png'];
@@ -14,6 +24,11 @@ const HomePage: React.FC = () => {
     </div>
   ));
 
+  const notices: Notice[] = [
+    { id: 1, title: '软件工程本周周末前上传需求报告', date: new Date() },
+    { id: 2, title: '软件工程本周周末前上传设计报告', date: new Date() },
+  ];
+
   return (
     <>
       <Row>
@@ -22,11 +37,29 @@ const HomePage: React.FC = () => {
         </Col>
       </Row>
       <Row>
-        <Col className={styles.content} span="24">
+        <Col span="24">
           <div className={styles.noticeOuterWrapper}>
             <div className={styles.noticeInnerWrapper}>
-              <div>院内通知</div>
-              <div></div>
+              <Title className={styles.noticeTitle} level={4}>
+                院内公告
+              </Title>
+              <List
+                className={styles.noticeList}
+                split={false}
+                dataSource={notices}
+                renderItem={(item) => (
+                  <List.Item className={styles.noticeItem}>
+                    <Link to={`/notices/${item.id}`}>
+                      <Text>
+                        <Tag color="red">NEW</Tag> {item.title}
+                      </Text>
+                    </Link>
+                    <Text type="secondary">
+                      {moment(item.date).format('YYYY-MM-DD')}
+                    </Text>
+                  </List.Item>
+                )}
+              />
             </div>
           </div>
         </Col>

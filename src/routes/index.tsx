@@ -10,6 +10,7 @@ import DoctorListPage from '../pages/doctors/DoctorListPage';
 import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
+import MapInfo from '../pages/epidemic/MapInfo';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -49,7 +50,7 @@ const Routes: React.FC = () =>
           path: 'epidemic',
           children: [
             { index: true },
-            { path: 'map' },
+            { path: 'map', element: <MapInfo /> },
             { path: 'nucleic' },
             { path: 'vaccine' },
           ],
@@ -63,7 +64,7 @@ const Routes: React.FC = () =>
           ],
         },
         {
-          path: 'doctors', 
+          path: 'doctors',
           element: <DoctorListPage />,
           children: [
             { index: true, element: <span>请选择医生</span> },
@@ -74,8 +75,8 @@ const Routes: React.FC = () =>
           path: 'illnesses',
           element: <IllnessListPage />,
           children: [
-            { index: true, element: <span>请选择病情</span>},
-            { path: ':illnessId', element: <IllnessInfo />},
+            { index: true, element: <span>请选择病情</span> },
+            { path: ':illnessId', element: <IllnessInfo /> },
           ],
         },
         { path: '*' },

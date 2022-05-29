@@ -34,10 +34,10 @@ const Routes: React.FC = () =>
           path: 'reserves',
           children: [{ index: true }, { path: ':reserveId' }],
         },
-        { path: 'nofity' },
+        { path: 'notice' },
         {
-          path: 'notifications',
-          children: [{ index: true }, { path: ':notificationId' }],
+          path: 'notices',
+          children: [{ index: true }, { path: ':noticeId' }],
         },
         { path: 'help', children: [{ index: true }, { path: ':helpId' }] },
         { path: 'feedback' },
@@ -63,7 +63,7 @@ const Routes: React.FC = () =>
           ],
         },
         {
-          path: 'doctors', 
+          path: 'doctors',
           element: <DoctorListPage />,
           children: [
             { index: true, element: <span>请选择医生</span> },
@@ -74,8 +74,8 @@ const Routes: React.FC = () =>
           path: 'illnesses',
           element: <IllnessListPage />,
           children: [
-            { index: true, element: <span>请选择病情</span>},
-            { path: ':illnessId', element: <IllnessInfo />},
+            { index: true, element: <span>请选择病情</span> },
+            { path: ':illnessId', element: <IllnessInfo /> },
           ],
         },
         { path: '*' },

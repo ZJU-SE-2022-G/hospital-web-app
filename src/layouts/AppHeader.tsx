@@ -1,6 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Layout, Row, Col, Space, Button, Menu, Dropdown } from 'antd';
+import {
+  Layout,
+  Row,
+  Col,
+  Space,
+  Typography,
+  Button,
+  Menu,
+  Dropdown,
+} from 'antd';
 import {
   SearchOutlined,
   UserOutlined,
@@ -9,6 +18,7 @@ import {
 import styles from './AppHeader.module.css';
 
 const { Header } = Layout;
+const { Title, Text } = Typography;
 
 const AppHeader: React.FC = () => {
   const navigate = useNavigate();
@@ -32,10 +42,12 @@ const AppHeader: React.FC = () => {
           <Space className={styles.link} onClick={() => navigate('/')}>
             <img src="/src/assets/favicon.svg" height="50" />
             <div className={styles.titleWrapper}>
-              <span className={styles.title}>SE-医疗管理系统</span>
-              <span className={styles.subTitle}>
-                SE-Medical Management System
-              </span>
+              <Title className={styles.title} level={4}>
+                医院网上预约系统
+              </Title>
+              <Text className={styles.subTitle} italic>
+                Hospital Reservation System
+              </Text>
             </div>
           </Space>
         </Col>

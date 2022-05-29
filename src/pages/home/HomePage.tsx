@@ -16,7 +16,7 @@ interface Notice {
 const HomePage: React.FC = () => {
   const imgs = ['carousel1.png', 'carousel1.png'];
 
-  const contents = imgs.map((img) => (
+  const contents = imgs.map(img => (
     <div>
       <div className={styles.content}>
         <img src={`/src/assets/home/${img}`} height="300" />
@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
                 className={styles.noticeList}
                 split={false}
                 dataSource={notices}
-                renderItem={(item) => (
+                renderItem={item => (
                   <List.Item className={styles.noticeItem}>
                     <Link to={`/notices/${item.id}`}>
                       <Text>

@@ -10,7 +10,7 @@ import DoctorListPage from '../pages/doctors/DoctorListPage';
 import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
-import MapInfo from '../pages/epidemic/MapInfo';
+import MapInfoPage from '../pages/epidemic/MapInfoPage';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -50,7 +50,7 @@ const Routes: React.FC = () =>
           path: 'epidemic',
           children: [
             { index: true },
-            { path: 'map', element: <MapInfo /> },
+            { path: 'map', element: <MapInfoPage /> },
             { path: 'nucleic' },
             { path: 'vaccine' },
           ],

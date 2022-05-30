@@ -5,6 +5,7 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
+import favicon from '../assets/favicon.svg';
 import styles from './AppHeader.module.css';
 
 const { Header } = Layout;
@@ -25,7 +26,7 @@ const AppHeader: React.FC = () => {
   return (
     <Header className={styles.header}>
       <Space>
-        <img src="/src/assets/favicon.svg" height="50" />
+        <img src={favicon} height="50" />
         <div className={styles.titleWrapper}>
           <span className={styles.title}>医院网上预约系统</span>
           <span className={styles.subTitle}>Hospital Reservation System</span>

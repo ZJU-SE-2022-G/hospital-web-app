@@ -1,11 +1,12 @@
 .header {
   height: unset;
   padding: 10px 50px;
-  display: flex;
-  justify-content: space-between;
   line-height: unset;
-  color: #ffffff;
   background: #6e3cbc;
+}
+
+.link {
+  cursor: pointer;
 }
 
 .titleWrapper {
@@ -14,12 +15,17 @@
   flex-direction: column;
 }
 
-.title {
-  font-size: 22px;
-  font-weight: 600;
+.titleWrapper .title {
+  margin: 0px;
+  color: #ffffff;
 }
 
-.subTitle {
-  font-size: 12px;
-  font-style: italic;
+.titleWrapper .subTitle {
+  color: #ffffff;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

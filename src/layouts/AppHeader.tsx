@@ -1,5 +1,15 @@
 import React from 'react';
-import { Layout, Space, Button, Menu, Dropdown } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import {
+  Layout,
+  Row,
+  Col,
+  Space,
+  Typography,
+  Button,
+  Menu,
+  Dropdown,
+} from 'antd';
 import {
   SearchOutlined,
   UserOutlined,
@@ -9,8 +19,11 @@ import favicon from '../assets/favicon.svg';
 import styles from './AppHeader.module.css';
 
 const { Header } = Layout;
+const { Title, Text } = Typography;
 
 const AppHeader: React.FC = () => {
+  const navigate = useNavigate();
+
   const menu = (
     <Menu
       items={[
@@ -25,19 +38,39 @@ const AppHeader: React.FC = () => {
 
   return (
     <Header className={styles.header}>
-      <Space>
-        <img src={favicon} height="50" />
-        <div className={styles.titleWrapper}>
-          <span className={styles.title}>医院网上预约系统</span>
-          <span className={styles.subTitle}>Hospital Reservation System</span>
-        </div>
-      </Space>
-      <Space>
-        <Button shape="circle" size="middle" icon={<SearchOutlined />} ghost />
-        <Dropdown overlay={menu}>
-          <Button shape="circle" size="middle" icon={<UserOutlined />} ghost />
-        </Dropdown>
-      </Space>
+      <Row>
+        <Col span="18">
+          <Space className={styles.link} onClick={() => navigate('/')}>
+            <img height="50" src={favicon} />
+            <div className={styles.titleWrapper}>
+              <Title className={styles.title} level={4}>
+                医院网上预约系统
+              </Title>
+              <Text className={styles.subTitle} italic>
+                Hospital Reservation System
+              </Text>
+            </div>
+          </Space>
+        </Col>
+        <Col className={styles.buttons} span="6">
+          <Space>
+            <Button
+              shape="circle"
+              size="middle"
+              icon={<SearchOutlined />}
+              ghost
+            />
+            <Dropdown overlay={menu}>
+              <Button
+                shape="circle"
+                size="middle"
+                icon={<UserOutlined />}
+                ghost
+              />
+            </Dropdown>
+          </Space>
+        </Col>
+      </Row>
     </Header>
   );
 };

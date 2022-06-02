@@ -8,18 +8,18 @@ const { Title } = Typography;
 interface NavigateButtonProps {
   href: string;
   label: string;
-  imgSrc: string;
+  img: string;
 }
 
 const NavigateButton: React.FC<NavigateButtonProps> = ({
   href,
   label,
-  imgSrc,
+  img,
 }) => {
   return (
     <Link to={href}>
       <div className={styles.button}>
-        <img className={styles.img} src={imgSrc} />
+        <img className={styles.img} src={img} />
         <Title className={styles.label} level={4}>
           {label}
         </Title>

@@ -15,6 +15,7 @@ import {
   UserOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
+import favicon from '../assets/favicon.svg';
 import styles from './AppHeader.module.css';
 
 const { Header } = Layout;
@@ -40,7 +41,7 @@ const AppHeader: React.FC = () => {
       <Row>
         <Col span="18">
           <Space className={styles.link} onClick={() => navigate('/')}>
-            <img src="/src/assets/favicon.svg" height="50" />
+            <img height="50" src={favicon} />
             <div className={styles.titleWrapper}>
               <Title className={styles.title} level={4}>
                 医院网上预约系统

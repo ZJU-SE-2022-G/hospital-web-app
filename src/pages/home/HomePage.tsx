@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { Row, Col, Carousel, List, Typography, Tag, Space } from 'antd';
 import NavigateButton from '../../components/NavigateButton';
+import carousel1Img from '../../assets/home/carousel1.png';
+import doctorImg from '../../assets/home/doctor.svg';
+import departmentImg from '../../assets/home/department.svg';
+import noticeImg from '../../assets/home/notice.svg';
+import reserveImg from '../../assets/home/reserve.svg';
 import styles from './HomePage.module.css';
 
 const { Title, Text } = Typography;
@@ -14,12 +19,12 @@ interface Notice {
 }
 
 const HomePage: React.FC = () => {
-  const imgs = ['carousel1.png', 'carousel1.png'];
+  const imgs = [carousel1Img, carousel1Img];
 
   const contents = imgs.map(img => (
     <div>
       <div className={styles.content}>
-        <img src={`/src/assets/home/${img}`} height="300" />
+        <img height="300" src={img} />
       </div>
     </div>
   ));
@@ -67,26 +72,14 @@ const HomePage: React.FC = () => {
       <Row>
         <Col className={styles.content} span="24">
           <Space size="large">
-            <NavigateButton
-              href="/doctors"
-              label="专家介绍"
-              imgSrc="/src/assets/home/doctor.svg"
-            />
+            <NavigateButton href="/doctors" label="专家介绍" img={doctorImg} />
             <NavigateButton
               href="/departments"
               label="科室介绍"
-              imgSrc="/src/assets/home/department.svg"
+              img={departmentImg}
             />
-            <NavigateButton
-              href="/notices"
-              label="院内公告"
-              imgSrc="/src/assets/home/notice.svg"
-            />
-            <NavigateButton
-              href="/reserve"
-              label="门诊预约"
-              imgSrc="/src/assets/home/reserve.svg"
-            />
+            <NavigateButton href="/notices" label="院内公告" img={noticeImg} />
+            <NavigateButton href="/reserve" label="门诊预约" img={reserveImg} />
           </Space>
         </Col>
       </Row>

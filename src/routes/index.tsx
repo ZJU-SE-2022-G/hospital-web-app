@@ -11,6 +11,8 @@ import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
 import MapInfoPage from '../pages/epidemic/MapInfoPage';
+import RegisterPage from '../pages/register/RegisterPage';
+import LoginPage from '../pages/login/LoginPage';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -19,8 +21,14 @@ const Routes: React.FC = () =>
       element: <AppLayout />,
       children: [
         { index: true, element: <HomePage /> },
-        { path: 'register' },
-        { path: 'login' },
+        {
+          path: 'register',
+          element:<RegisterPage/>
+        },
+        {
+          path: 'login',
+          element:<LoginPage/>
+        },
         {
           path: 'users',
           children: [

@@ -1,0 +1,41 @@
+.loginStyle {
+  width: 80%;
+  height: 90%;
+  margin-left: 10%;
+  margin-top: 2.5%;
+  border-radius: 20px;
+  box-shadow: 6px 6px 3px #888888;
+}
+
+.leftStyle {
+  position: relative;
+  top: 10%;
+  left: 15%;
+  width: 20rem;
+  float: left;
+}
+
+.rightStyle {
+  position: relative;
+  top: 20%;
+  left: 25%;
+  width: 50rem;
+}
+
+.headerStyle {
+  position: relative;
+  left: 10%;
+  top: 5%;
+  height: 4rem;
+}
+
+.textStyle {
+  font-weight: bolder;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.tailStyle {
+  position: relative;
+  left: 20%;
+}

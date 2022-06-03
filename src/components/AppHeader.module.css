@@ -29,3 +29,9 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+@media screen and (max-width: 450px) {
+  .titleWrapper {
+    display: none;
+  }
+}

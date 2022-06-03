@@ -14,10 +14,10 @@ const LoginLayout: React.FC<LoginLayoutProps> = ({ children }) => {
   return (
     <div className={styles.page}>
       <div className={styles.layout}>
-        <div className={styles.content}>
-          <img src={background} />
+        <div className={styles.left}>
+          <img width="300" src={background} />
         </div>
-        <div className={styles.content}>
+        <div className={styles.right}>
           <div className={styles.header}>
             <img src={favicon} />
             <Title className={styles.text} level={4}>

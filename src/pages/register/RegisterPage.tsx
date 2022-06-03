@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
 import LoginLayout from '../../layouts/LoginLayout';
+import styles from './RegisterPage.module.css';
 
 const RegisterPage: React.FC = () => {
   const [form] = Form.useForm();
@@ -13,6 +14,7 @@ const RegisterPage: React.FC = () => {
   return (
     <LoginLayout>
       <Form
+        className={styles.form}
         form={form}
         name="register"
         labelAlign="left"
@@ -90,12 +92,17 @@ const RegisterPage: React.FC = () => {
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
           <Link to="/login">
-            <Button type="dashed" htmlType="reset" shape="round">
+            <Button
+              className={styles.button}
+              type="dashed"
+              htmlType="reset"
+              shape="round"
+            >
               取消
             </Button>
           </Link>
           <Button
-            style={{ margin: 10 }}
+            className={styles.button}
             type="primary"
             htmlType="submit"
             shape="round"

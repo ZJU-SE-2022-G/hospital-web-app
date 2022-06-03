@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Layout, Menu, MenuProps } from 'antd';
-import styles from './MenuContentView.module.css';
+import styles from './MenuContentLayout.module.css';
 
 const { Sider, Content } = Layout;
 

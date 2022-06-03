@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
-import AppHeader from './AppHeader';
+import AppHeader from '../components/AppHeader';
 import styles from './AppLayout.module.css';
 
 const { Content } = Layout;

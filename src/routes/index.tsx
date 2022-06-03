@@ -23,11 +23,11 @@ const Routes: React.FC = () =>
         { index: true, element: <HomePage /> },
         {
           path: 'register',
-          element:<RegisterPage/>
+          element: <RegisterPage />,
         },
         {
           path: 'login',
-          element:<LoginPage/>
+          element: <LoginPage />,
         },
         {
           path: 'users',

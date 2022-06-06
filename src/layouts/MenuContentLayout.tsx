@@ -5,15 +5,12 @@ import styles from './MenuContentLayout.module.css';
 
 const { Sider, Content } = Layout;
 
-/**
- * route 给定基路由，点击菜单时根据 menuItems 各项的 key 跳转
- */
-interface MenuContentViewProps {
+interface MenuContentLayoutProps {
   route: string;
   menuItems: MenuProps['items'];
 }
 
-const MenuContentView: React.FC<MenuContentViewProps> = ({
+const MenuContentLayout: React.FC<MenuContentLayoutProps> = ({
   route,
   menuItems,
 }) => {
@@ -34,4 +31,4 @@ const MenuContentView: React.FC<MenuContentViewProps> = ({
   );
 };
 
-export default MenuContentView;
+export default MenuContentLayout;

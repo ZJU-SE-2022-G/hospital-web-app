@@ -1,14 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Form, Input } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Form, Input, message } from 'antd';
 import LoginLayout from '../../layouts/LoginLayout';
+import { useLoginUserMutation } from '../../apis/apiSlice';
 import styles from './LoginPage.module.css';
 
 const LoginPage: React.FC = () => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<LoginUserRequest>();
+  const [login, { isLoading }] = useLoginUserMutation();
+  const navigate = useNavigate();
 
-  const onFinish = async (values: any) => {
-    console.log('Received: ', values);
+  const onFinish = async () => {
+    try {
+      await login(form.getFieldsValue()).unwrap();
+      navigate('/');
+    } catch (err: any) {
+      message.error(err.message || err.status);
+    }
   };
 
   return (
@@ -24,7 +32,7 @@ const LoginPage: React.FC = () => {
         onFinish={onFinish}
       >
         <Form.Item
-          name="mobile"
+          name="phone"
           label="手机号"
           rules={[
             { required: true, message: '请输入手机号' },
@@ -61,6 +69,7 @@ const LoginPage: React.FC = () => {
             type="primary"
             htmlType="submit"
             shape="round"
+            disabled={isLoading}
           >
             登录
           </Button>

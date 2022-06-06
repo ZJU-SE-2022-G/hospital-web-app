@@ -1,14 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Form, Input } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Form, Input, message } from 'antd';
 import LoginLayout from '../../layouts/LoginLayout';
+import {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+} from '../../apis/apiSlice';
 import styles from './RegisterPage.module.css';
 
 const RegisterPage: React.FC = () => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<RegisterUserRequest>();
+  const [register, { isLoading: registerLoading }] = useRegisterUserMutation();
+  const [login, { isLoading: loginLoading }] = useLoginUserMutation();
+  const navigate = useNavigate();
 
-  const onFinish = async (values: any) => {
-    console.log('Received: ', values);
+  const isLoading = registerLoading || loginLoading;
+
+  const onFinish = async () => {
+    try {
+      await register(form.getFieldsValue()).unwrap();
+      await login({
+        phone: form.getFieldValue('phone'),
+        password: form.getFieldValue('password'),
+      }).unwrap();
+      navigate('/');
+    } catch (err: any) {
+      message.error(err.message || err.status);
+    }
   };
 
   return (
@@ -33,7 +51,7 @@ const RegisterPage: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          name="mobile"
+          name="phone"
           label="手机号"
           rules={[
             { required: true, message: '请输入手机号' },
@@ -48,7 +66,7 @@ const RegisterPage: React.FC = () => {
           <Input addonBefore="+86" />
         </Form.Item>
         <Form.Item
-          name="idcard"
+          name="id"
           label="身份证号"
           rules={[
             { required: true, message: '请输入身份证号' },
@@ -106,6 +124,7 @@ const RegisterPage: React.FC = () => {
             type="primary"
             htmlType="submit"
             shape="round"
+            disabled={isLoading}
           >
             注册
           </Button>

@@ -6,15 +6,13 @@ import styles from './AppLayout.module.css';
 
 const { Content } = Layout;
 
-const AppLayout: React.FC = () => {
-  return (
-    <Layout className={styles.layout}>
-      <AppHeader />
-      <Content>
-        <Outlet />
-      </Content>
-    </Layout>
-  );
-};
+const AppLayout: React.FC = () => (
+  <Layout className={styles.layout}>
+    <AppHeader />
+    <Content>
+      <Outlet />
+    </Content>
+  </Layout>
+);
 
 export default AppLayout;

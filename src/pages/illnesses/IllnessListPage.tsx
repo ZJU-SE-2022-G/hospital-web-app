@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuProps } from 'antd';
 import { AlertOutlined } from '@ant-design/icons';
-import MenuContentView from '../../components/MenuContentView';
+import MenuContentLayout from '../../layouts/MenuContentLayout';
 
 const IllnessListPage: React.FC = () => {
   const items: MenuProps['items'] = [
@@ -17,7 +17,7 @@ const IllnessListPage: React.FC = () => {
     },
   ];
 
-  return <MenuContentView route="/illnesses" menuItems={items} />;
+  return <MenuContentLayout route="/illnesses" menuItems={items} />;
 };
 
 export default IllnessListPage;

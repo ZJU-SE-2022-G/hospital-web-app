@@ -12,12 +12,6 @@ import styles from './HomePage.module.css';
 
 const { Title, Text } = Typography;
 
-interface Notice {
-  id: number;
-  title: string;
-  date: Date;
-}
-
 const HomePage: React.FC = () => {
   const imgs = [carousel1Img, carousel1Img];
 

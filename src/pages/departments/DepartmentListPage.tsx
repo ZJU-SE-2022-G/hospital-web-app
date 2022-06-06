@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuProps } from 'antd';
 import { UsergroupAddOutlined } from '@ant-design/icons';
-import MenuContentView from '../../components/MenuContentView';
+import MenuContentLayout from '../../layouts/MenuContentLayout';
 
 const DepartmentListPage: React.FC = () => {
   const items: MenuProps['items'] = [
@@ -17,7 +17,7 @@ const DepartmentListPage: React.FC = () => {
     },
   ];
 
-  return <MenuContentView route="/departments" menuItems={items} />;
+  return <MenuContentLayout route="/departments" menuItems={items} />;
 };
 
 export default DepartmentListPage;

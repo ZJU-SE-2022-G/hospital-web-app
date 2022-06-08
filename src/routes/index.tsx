@@ -5,7 +5,9 @@ import HomePage from '../pages/home/HomePage';
 import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
+import AppointListPage  from '../pages/appointment/AppointListPage';
 import DepartmentInfo from '../pages/departments/DepartmentInfo';
+import AppointmentInfo from '../pages/appointment/AppointmentInfo';
 import DoctorListPage from '../pages/doctors/DoctorListPage';
 import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
@@ -61,6 +63,14 @@ const Routes: React.FC = () =>
             { path: 'map', element: <MapInfoPage /> },
             { path: 'nucleic' },
             { path: 'vaccine' },
+          ],
+        },
+        {
+          path: 'appointments',
+          element: <AppointListPage />,
+          children: [
+            { index: true, element: <span>选择待处理的预约</span> },
+            { path: ':appointmentId', element: <AppointmentInfo /> },
           ],
         },
         {

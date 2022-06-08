@@ -2,6 +2,8 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import AppLayout from '../layouts/AppLayout';
 import HomePage from '../pages/home/HomePage';
+import RegisterPage from '../pages/register/RegisterPage';
+import LoginPage from '../pages/login/LoginPage';
 import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
@@ -20,8 +22,14 @@ const Routes: React.FC = () =>
       element: <AppLayout />,
       children: [
         { index: true, element: <HomePage /> },
-        { path: 'register' },
-        { path: 'login' },
+        {
+          path: 'register',
+          element: <RegisterPage />,
+        },
+        {
+          path: 'login',
+          element: <LoginPage />,
+        },
         {
           path: 'users',
           children: [

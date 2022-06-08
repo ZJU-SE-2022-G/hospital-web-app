@@ -1,0 +1,45 @@
+.page {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout {
+  width: 80%;
+  min-height: 90%;
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 6px 6px 3px #888888;
+}
+
+.left,
+.right {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.header .text {
+  margin: 0px 10px;
+}
+
+@media screen and (max-width: 900px) {
+  .left {
+    display: none;
+  }
+
+  .right {
+    width: 100%;
+  }
+}

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { stringify } from 'qs';
 
 const SUCCESS = 200;
 
@@ -7,8 +8,8 @@ const apiSlice = createApi({
   tagTypes: ['User'],
   endpoints: build => ({
     registerUser: build.mutation<void, RegisterUserRequest>({
-      query: ({ id, name, phone, password }) => ({
-        url: `/users/reg?id=${id}&name=${name}&phone=${phone}&password=${password}`,
+      query: request => ({
+        url: `/users/reg?${stringify(request)}`,
         method: 'POST',
       }),
       transformResponse: (response: ApiResponse<void>) => {
@@ -20,8 +21,8 @@ const apiSlice = createApi({
     }),
 
     loginUser: build.mutation<User, LoginUserRequest>({
-      query: ({ phone, password }) => ({
-        url: `/users/loginByPhone?phone=${phone}&password=${password}`,
+      query: request => ({
+        url: `/users/loginByPhone?${stringify(request)}`,
         method: 'POST',
       }),
       transformResponse: (response: ApiResponse<User>) => {
@@ -45,6 +46,18 @@ const apiSlice = createApi({
         ),
       }),
     }),
+
+    reserveNucleic: build.mutation<void, ReserveNucleicRequest>({
+      query: request => ({
+        url: `/nucTestApp/insert?${stringify(request)}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: ApiResponse<void>) => {
+        if (response.state !== SUCCESS) {
+          throw response;
+        }
+      },
+    }),
   }),
 });
 
@@ -54,4 +67,5 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useGetEpidemicMapQuery,
+  useReserveNucleicMutation,
 } = apiSlice;

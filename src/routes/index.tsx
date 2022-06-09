@@ -2,6 +2,8 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import AppLayout from '../layouts/AppLayout';
 import HomePage from '../pages/home/HomePage';
+import RegisterPage from '../pages/register/RegisterPage';
+import LoginPage from '../pages/login/LoginPage';
 import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
@@ -11,8 +13,7 @@ import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
 import MapInfoPage from '../pages/epidemic/MapInfoPage';
-import RegisterPage from '../pages/register/RegisterPage';
-import LoginPage from '../pages/login/LoginPage';
+import NucleicPage from '../pages/epidemic/NucleicPage';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -59,7 +60,7 @@ const Routes: React.FC = () =>
           children: [
             { index: true },
             { path: 'map', element: <MapInfoPage /> },
-            { path: 'nucleic' },
+            { path: 'nucleic', element: <NucleicPage /> },
             { path: 'vaccine' },
           ],
         },
@@ -67,7 +68,7 @@ const Routes: React.FC = () =>
           path: 'departments',
           element: <DepartmentListPage />,
           children: [
-            { index: true, element: <span>请选择部门</span> },
+            { index: true, element: <span>请选择科室</span> },
             { path: ':departmentId', element: <DepartmentInfo /> },
           ],
         },

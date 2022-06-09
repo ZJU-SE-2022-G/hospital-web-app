@@ -10,7 +10,7 @@
 
 UI 库：[Ant Design](https://ant.design/index-cn)
 
-网络请求库：[Axios](https://www.axios-http.cn/)
+网络请求库：[RTK Query](https://redux.js.org/tutorials/essentials/part-7-rtk-query-basics)
 
 其他可能用到的库：[React Router](https://reactrouter.com/)、[Redux](http://cn.redux.js.org/)、[Lodash](https://www.lodashjs.com/)、[ahooks](https://ahooks.js.org/zh-CN/)
 

@@ -6,14 +6,18 @@ import { useLoginUserMutation } from '../../apis/apiSlice';
 import styles from './LoginPage.module.css';
 
 const LoginPage: React.FC = () => {
-  const [form] = Form.useForm<LoginUserRequest>();
+  const [form] = Form.useForm();
   const [login, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
 
   const onFinish = async () => {
     try {
-      await login(form.getFieldsValue()).unwrap();
+      await login({
+        phone: form.getFieldValue('phone'),
+        password: form.getFieldValue('password'),
+      }).unwrap();
       navigate('/');
+      message.success('登录成功');
     } catch (err: any) {
       message.error(err.message || err.status);
     }
@@ -54,20 +58,19 @@ const LoginPage: React.FC = () => {
           <Input.Password />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
-          <Link to="/">
-            <Button
-              className={styles.button}
-              type="dashed"
-              htmlType="reset"
-              shape="round"
-            >
-              取消
-            </Button>
-          </Link>
           <Button
             className={styles.button}
-            type="primary"
+            htmlType="reset"
+            type="dashed"
+            shape="round"
+            onClick={() => navigate(-1)}
+          >
+            取消
+          </Button>
+          <Button
+            className={styles.button}
             htmlType="submit"
+            type="primary"
             shape="round"
             disabled={isLoading}
           >
@@ -75,7 +78,7 @@ const LoginPage: React.FC = () => {
           </Button>
           <br />
           <Link to="/register">
-            <Button className={styles.button} type="link" shape="round">
+            <Button className={styles.button} type="link">
               还没有账号？注册
             </Button>
           </Link>

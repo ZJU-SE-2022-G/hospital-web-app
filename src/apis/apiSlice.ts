@@ -58,6 +58,18 @@ const apiSlice = createApi({
         }
       },
     }),
+
+    reserveVaccine: build.mutation<void, ReserveVaccineRequest>({
+      query: request => ({
+        url: `/vacApp/insert?${stringify(request)}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: ApiResponse<void>) => {
+        if (response.state !== SUCCESS) {
+          throw response;
+        }
+      },
+    }),
   }),
 });
 
@@ -68,4 +80,5 @@ export const {
   useLoginUserMutation,
   useGetEpidemicMapQuery,
   useReserveNucleicMutation,
+  useReserveVaccineMutation,
 } = apiSlice;

@@ -5,7 +5,7 @@ import {
   PageHeader,
   Form,
   Input,
-  Select,
+  Radio,
   DatePicker,
   Button,
   message,
@@ -13,22 +13,18 @@ import {
 import { useReserveNucleicMutation } from '../../apis/apiSlice';
 import styles from './NucleicPage.module.css';
 
-const { Option } = Select;
-
 const NucleicPage: React.FC = () => {
   const [form] = Form.useForm();
   const [reserve, { isLoading }] = useReserveNucleicMutation();
   const navigate = useNavigate();
 
-  const onFinish = async () => {
+  const onFinish = async (values: any) => {
     try {
       await reserve({
-        usrId: form.getFieldValue('idcard'),
-        usrName: form.getFieldValue('name'),
-        testType: form.getFieldValue('nucleicType'),
-        testDate: (form.getFieldValue('nucleicDate') as moment.Moment).format(
-          'YYYY-MM-DD',
-        ),
+        usrId: values['id'],
+        usrName: values['name'],
+        testType: values['nucleic-type'],
+        testDate: values['nucleic-date'].format('YYYY-MM-DD'),
       }).unwrap();
       navigate('/');
       message.success('预约成功');
@@ -38,7 +34,7 @@ const NucleicPage: React.FC = () => {
   };
 
   return (
-    <PageHeader className={styles.page} title="核酸预约">
+    <PageHeader className={styles.page} title="核酸检测预约">
       <Form
         form={form}
         name="nucleic"
@@ -58,7 +54,7 @@ const NucleicPage: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          name="idcard"
+          name="id"
           label="身份证号"
           rules={[
             { required: true, message: '请输入身份证号' },
@@ -73,22 +69,18 @@ const NucleicPage: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          name="nucleicType"
-          label="单检/混检"
-          rules={[{ required: true, message: '请选择检查类型' }]}
+          name="nucleic-type"
+          label="检测类型"
+          rules={[{ required: true, message: '请选择检测类型' }]}
         >
-          <Select placeholder="请选择检查类型">
-            <Option value="单检">单检</Option>
-            <Option value="混检">混检</Option>
-          </Select>
+          <Radio.Group name="nucleic-type" options={['单检', '混检']} />
         </Form.Item>
         <Form.Item
-          name="nucleicDate"
-          label="预约日期"
-          rules={[{ required: true, message: '请选择检查日期' }]}
+          name="nucleic-date"
+          label="检测日期"
+          rules={[{ required: true, message: '请选择检测日期' }]}
         >
           <DatePicker
-            placeholder="请选择检查日期"
             disabledDate={current =>
               current &&
               (current < moment().endOf('day') ||

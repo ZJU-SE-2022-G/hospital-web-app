@@ -10,11 +10,11 @@ const LoginPage: React.FC = () => {
   const [login, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
 
-  const onFinish = async () => {
+  const onFinish = async (values: any) => {
     try {
       await login({
-        phone: form.getFieldValue('phone'),
-        password: form.getFieldValue('password'),
+        phone: values['phone'],
+        password: values['password'],
       }).unwrap();
       navigate('/');
       message.success('登录成功');

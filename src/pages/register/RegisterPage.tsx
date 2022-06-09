@@ -16,17 +16,17 @@ const RegisterPage: React.FC = () => {
 
   const isLoading = registerLoading || loginLoading;
 
-  const onFinish = async () => {
+  const onFinish = async (values: any) => {
     try {
       await register({
-        id: form.getFieldValue('idcard'),
-        name: form.getFieldValue('name'),
-        phone: form.getFieldValue('phone'),
-        password: form.getFieldValue('password'),
+        id: values['id'],
+        name: values['name'],
+        phone: values['phone'],
+        password: values['password'],
       }).unwrap();
       await login({
-        phone: form.getFieldValue('phone'),
-        password: form.getFieldValue('password'),
+        phone: values['phone'],
+        password: values['password'],
       }).unwrap();
       navigate('/');
       message.success('注册成功');
@@ -72,7 +72,7 @@ const RegisterPage: React.FC = () => {
           <Input addonBefore="+86" />
         </Form.Item>
         <Form.Item
-          name="idcard"
+          name="id"
           label="身份证号"
           rules={[
             { required: true, message: '请输入身份证号' },

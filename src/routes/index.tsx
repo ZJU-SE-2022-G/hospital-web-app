@@ -14,6 +14,7 @@ import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
 import MapInfoPage from '../pages/epidemic/MapInfoPage';
 import NucleicPage from '../pages/epidemic/NucleicPage';
+import VaccinePage from '../pages/epidemic/VaccinePage';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -61,7 +62,7 @@ const Routes: React.FC = () =>
             { index: true },
             { path: 'map', element: <MapInfoPage /> },
             { path: 'nucleic', element: <NucleicPage /> },
-            { path: 'vaccine' },
+            { path: 'vaccine', element: <VaccinePage /> },
           ],
         },
         {

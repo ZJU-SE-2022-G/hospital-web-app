@@ -5,17 +5,18 @@ import {
   PageHeader,
   Form,
   Input,
+  InputNumber,
   Radio,
   DatePicker,
   Button,
   message,
 } from 'antd';
-import { useReserveNucleicMutation } from '../../apis/apiSlice';
+import { useReserveVaccineMutation } from '../../apis/apiSlice';
 import styles from './NucleicPage.module.css';
 
-const NucleicPage: React.FC = () => {
+const VaccinePage: React.FC = () => {
   const [form] = Form.useForm();
-  const [reserve, { isLoading }] = useReserveNucleicMutation();
+  const [reserve, { isLoading }] = useReserveVaccineMutation();
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
@@ -23,8 +24,10 @@ const NucleicPage: React.FC = () => {
       await reserve({
         usrId: values['id'],
         usrName: values['name'],
-        testType: values['nucleic-type'],
-        testDate: values['nucleic-date'].format('YYYY-MM-DD'),
+        age: values['age'],
+        sex: values['sex'],
+        vacNum: values['vaccine-number'],
+        vacDate: values['vaccine-date'].format('YYYY-MM-DD'),
       }).unwrap();
       navigate('/');
       message.success('预约成功');
@@ -34,10 +37,10 @@ const NucleicPage: React.FC = () => {
   };
 
   return (
-    <PageHeader className={styles.page} title="核酸检测预约">
+    <PageHeader className={styles.page} title="疫苗接种预约">
       <Form
         form={form}
-        name="nucleic"
+        name="vaccine"
         labelAlign="left"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
@@ -69,16 +72,33 @@ const NucleicPage: React.FC = () => {
           <Input />
         </Form.Item>
         <Form.Item
-          name="nucleic-type"
-          label="检测类型"
-          rules={[{ required: true, message: '请选择检测类型' }]}
+          name="age"
+          label="年龄"
+          rules={[{ required: true, message: '请输入您的年龄' }]}
         >
-          <Radio.Group name="nucleic-type" options={['单检', '混检']} />
+          <InputNumber max={200} min={0} />
         </Form.Item>
         <Form.Item
-          name="nucleic-date"
-          label="检测日期"
-          rules={[{ required: true, message: '请选择检测日期' }]}
+          name="sex"
+          label="性别"
+          rules={[{ required: true, message: '请选择您的性别' }]}
+        >
+          <Radio.Group name="sex" options={['男', '女']} />
+        </Form.Item>
+        <Form.Item
+          name="vaccine-number"
+          label="接种针次"
+          rules={[{ required: true, message: '请选择接种针次' }]}
+        >
+          <Radio.Group
+            name="vaccine-number"
+            options={['第一针', '第二针', '第三针']}
+          />
+        </Form.Item>
+        <Form.Item
+          name="vaccine-date"
+          label="接种日期"
+          rules={[{ required: true, message: '请选择接种日期' }]}
         >
           <DatePicker
             disabledDate={current =>
@@ -113,4 +133,4 @@ const NucleicPage: React.FC = () => {
   );
 };
 
-export default NucleicPage;
+export default VaccinePage;

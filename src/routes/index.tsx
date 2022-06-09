@@ -7,7 +7,7 @@ import UserInfoPage from '../pages/users/UserInfoPage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
 import NucleicInfo from '../pages/appointment/NucleicInfo';
 import DepartmentInfo from '../pages/departments/DepartmentInfo';
-import VaccineInfo from '../pages/appointment/vaccineInfo';
+import VaccineInfo from '../pages/appointment/VaccineInfo';
 import DoctorListPage from '../pages/doctors/DoctorListPage';
 import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
@@ -15,7 +15,8 @@ import IllnessInfo from '../pages/illnesses/IllnessInfo';
 import MapInfoPage from '../pages/epidemic/MapInfoPage';
 import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
-
+import Doctorapp from '../pages/appointment/Doctorapp';
+import DoctorappInfo from '../pages/appointment/DoctorappInfo';
 const Routes: React.FC = () =>
   useRoutes([
     {
@@ -63,6 +64,7 @@ const Routes: React.FC = () =>
             { path: 'map', element: <MapInfoPage /> },
             { path: 'nucleic' },
             { path: 'vaccine' },
+            { path: 'doctor', element: <Doctorapp />},
           ],
         },
         {
@@ -70,7 +72,8 @@ const Routes: React.FC = () =>
           children: [
             { index: true},
             { path: 'vaccine', element: < VaccineInfo /> },
-            { path: 'nucleic', element: < VaccineInfo /> },
+            { path: 'nucleic', element: < NucleicInfo /> },
+            { path: 'doctor', element: <DoctorappInfo /> }, 
           ],
         },
         {

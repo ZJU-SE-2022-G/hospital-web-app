@@ -1,8 +1,10 @@
+import { Typography } from 'antd';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetDoctorDetailQuery } from '../../apis/apiSlice';
 
 const DoctorInfo: React.FC = () => {
+  const { Title } = Typography;
   const { doctorId } = useParams();
   const { data, isFetching } = useGetDoctorDetailQuery(doctorId);
   const age = isFetching ? undefined : data[0].age;
@@ -13,13 +15,15 @@ const DoctorInfo: React.FC = () => {
   return isFetching ? (
     <span>加载中...</span>
   ) : (
-    <span>
-      医生：{docName} <br />
-      年龄：{age} <br />
-      性别：{sex} <br />
-      所属科室：{department} <br />
-      {docDetail}
-    </span>
+    <div>
+      <Title level={4}>{docName}</Title>
+      <span>
+        年龄：{age} <br />
+        性别：{sex} <br />
+        所属科室：{department} <br />
+        {docDetail}
+      </span>
+    </div>
   );
 };
 

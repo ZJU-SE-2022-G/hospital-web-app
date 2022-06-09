@@ -1,11 +1,14 @@
 import React from 'react';
-import { MenuProps } from 'antd';
+import { Typography } from 'antd';
+import type { MenuProps } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import MenuContentView from '../../components/MenuContentView';
+import MenuContentLayout from '../../layouts/MenuContentLayout';
+
+const { Text } = Typography;
 
 const DoctorListPage: React.FC = () => {
   const items: MenuProps['items'] = [
-    { key: 'index', label: '医生首页' },
+    { key: 'index', label: <Text strong>医生介绍</Text> },
     {
       type: 'group',
       label: '医生列表',
@@ -17,7 +20,7 @@ const DoctorListPage: React.FC = () => {
     },
   ];
 
-  return <MenuContentView route="/doctors" menuItems={items} />;
+  return <MenuContentLayout route="/doctors" menuItems={items} />;
 };
 
 export default DoctorListPage;

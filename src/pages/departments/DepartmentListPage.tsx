@@ -1,11 +1,14 @@
 import React from 'react';
-import { MenuProps } from 'antd';
+import { Typography } from 'antd';
+import type { MenuProps } from 'antd';
 import { UsergroupAddOutlined } from '@ant-design/icons';
-import MenuContentView from '../../components/MenuContentView';
+import MenuContentLayout from '../../layouts/MenuContentLayout';
+
+const { Text } = Typography;
 
 const DepartmentListPage: React.FC = () => {
   const items: MenuProps['items'] = [
-    { key: 'index', label: '科室首页' },
+    { key: 'index', label: <Text strong>科室介绍</Text> },
     {
       type: 'group',
       label: '科室列表',
@@ -17,7 +20,7 @@ const DepartmentListPage: React.FC = () => {
     },
   ];
 
-  return <MenuContentView route="/departments" menuItems={items} />;
+  return <MenuContentLayout route="/departments" menuItems={items} />;
 };
 
 export default DepartmentListPage;

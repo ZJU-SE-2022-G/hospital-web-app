@@ -12,12 +12,6 @@ import styles from './HomePage.module.css';
 
 const { Title, Text } = Typography;
 
-interface Notice {
-  id: number;
-  title: string;
-  date: Date;
-}
-
 const HomePage: React.FC = () => {
   const imgs = [carousel1Img, carousel1Img];
 
@@ -72,7 +66,7 @@ const HomePage: React.FC = () => {
       <Row>
         <Col className={styles.content} span="24">
           <Space size="large">
-            <NavigateButton href="/doctors" label="专家介绍" img={doctorImg} />
+            <NavigateButton href="/doctors" label="医生介绍" img={doctorImg} />
             <NavigateButton
               href="/departments"
               label="科室介绍"

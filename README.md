@@ -10,7 +10,7 @@
 
 UI 库：[Ant Design](https://ant.design/index-cn)
 
-网络请求库：[Axios](https://www.axios-http.cn/)
+网络请求库：[RTK Query](https://redux.js.org/tutorials/essentials/part-7-rtk-query-basics)
 
 其他可能用到的库：[React Router](https://reactrouter.com/)、[Redux](http://cn.redux.js.org/)、[Lodash](https://www.lodashjs.com/)、[ahooks](https://ahooks.js.org/zh-CN/)
 
@@ -46,6 +46,7 @@ yarn dev --host
 - pages：页面和页面级组件
 - routes：路由配置
 - stores：全局状态管理
+- types：类型定义
 - utils：工具方法
 - App.tsx：应用入口
 - index.css：全局样式

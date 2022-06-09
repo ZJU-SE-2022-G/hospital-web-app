@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import LoginLayout from '../../layouts/LoginLayout';
 import {
@@ -9,7 +9,7 @@ import {
 import styles from './RegisterPage.module.css';
 
 const RegisterPage: React.FC = () => {
-  const [form] = Form.useForm<RegisterUserRequest>();
+  const [form] = Form.useForm();
   const [register, { isLoading: registerLoading }] = useRegisterUserMutation();
   const [login, { isLoading: loginLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
@@ -18,12 +18,18 @@ const RegisterPage: React.FC = () => {
 
   const onFinish = async () => {
     try {
-      await register(form.getFieldsValue()).unwrap();
+      await register({
+        id: form.getFieldValue('idcard'),
+        name: form.getFieldValue('name'),
+        phone: form.getFieldValue('phone'),
+        password: form.getFieldValue('password'),
+      }).unwrap();
       await login({
         phone: form.getFieldValue('phone'),
         password: form.getFieldValue('password'),
       }).unwrap();
       navigate('/');
+      message.success('注册成功');
     } catch (err: any) {
       message.error(err.message || err.status);
     }
@@ -66,7 +72,7 @@ const RegisterPage: React.FC = () => {
           <Input addonBefore="+86" />
         </Form.Item>
         <Form.Item
-          name="id"
+          name="idcard"
           label="身份证号"
           rules={[
             { required: true, message: '请输入身份证号' },
@@ -109,20 +115,19 @@ const RegisterPage: React.FC = () => {
           <Input.Password />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
-          <Link to="/login">
-            <Button
-              className={styles.button}
-              type="dashed"
-              htmlType="reset"
-              shape="round"
-            >
-              取消
-            </Button>
-          </Link>
           <Button
             className={styles.button}
-            type="primary"
+            htmlType="reset"
+            type="dashed"
+            shape="round"
+            onClick={() => navigate(-1)}
+          >
+            取消
+          </Button>
+          <Button
+            className={styles.button}
             htmlType="submit"
+            type="primary"
             shape="round"
             disabled={isLoading}
           >

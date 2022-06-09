@@ -68,7 +68,7 @@ const Routes: React.FC = () =>
           path: 'departments',
           element: <DepartmentListPage />,
           children: [
-            { index: true, element: <span>请选择部门</span> },
+            { index: true, element: <span>请选择科室</span> },
             { path: ':departmentId', element: <DepartmentInfo /> },
           ],
         },

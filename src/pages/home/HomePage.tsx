@@ -66,7 +66,7 @@ const HomePage: React.FC = () => {
       <Row>
         <Col className={styles.content} span="24">
           <Space size="large">
-            <NavigateButton href="/doctors" label="专家介绍" img={doctorImg} />
+            <NavigateButton href="/doctors" label="医生介绍" img={doctorImg} />
             <NavigateButton
               href="/departments"
               label="科室介绍"

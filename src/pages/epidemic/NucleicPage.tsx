@@ -1,28 +1,52 @@
-import { Button, DatePicker, Form, Input, Select } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import {
+  PageHeader,
+  Form,
+  Input,
+  Select,
+  DatePicker,
+  Button,
+  message,
+} from 'antd';
+import { useReserveNucleicMutation } from '../../apis/apiSlice';
+import styles from './NucleicPage.module.css';
+
+const { Option } = Select;
 
 const NucleicPage: React.FC = () => {
   const [form] = Form.useForm();
-  const onFinish = async (values: any) => {
-    console.log('Received: ', values);
+  const [reserve, { isLoading }] = useReserveNucleicMutation();
+  const navigate = useNavigate();
+
+  const onFinish = async () => {
+    try {
+      await reserve({
+        usrId: form.getFieldValue('idcard'),
+        usrName: form.getFieldValue('name'),
+        testType: form.getFieldValue('nucleicType'),
+        testDate: (form.getFieldValue('nucleicDate') as moment.Moment).format(
+          'YYYY-MM-DD',
+        ),
+      }).unwrap();
+      navigate('/');
+      message.success('预约成功');
+    } catch (err: any) {
+      message.error(err.message || err.status);
+    }
   };
-  const { Option } = Select;
-  const formItemLayout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 4 },
-  };
-  const formTailLayout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 8, offset: 8 },
-  };
+
   return (
-    <div style={{ marginTop: 25 }}>
+    <PageHeader className={styles.page} title="核酸预约">
       <Form
         form={form}
         name="nucleic"
+        labelAlign="left"
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
+        validateTrigger="onBlur"
         onFinish={onFinish}
-        {...formItemLayout}
-        scrollToFirstError
       >
         <Form.Item
           name="name"
@@ -38,14 +62,12 @@ const NucleicPage: React.FC = () => {
           label="身份证号"
           rules={[
             { required: true, message: '请输入身份证号' },
-            () => ({
-              validator(_, value) {
-                if (!value || value.length == 18) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error('身份证号长度不符'));
-              },
-            }),
+            {
+              validator: (_, value) =>
+                !value || (value.length === 18 && /^\d+X?$/.test(value))
+                  ? Promise.resolve()
+                  : Promise.reject(new Error('请输入正确的身份证号')),
+            },
           ]}
         >
           <Input />
@@ -63,31 +85,39 @@ const NucleicPage: React.FC = () => {
         <Form.Item
           name="nucleicDate"
           label="预约日期"
-          rules={[
-            {
-              type: 'object' as const,
-              required: true,
-              message: '请选择检查日期',
-            },
-          ]}
+          rules={[{ required: true, message: '请选择检查日期' }]}
         >
-          <DatePicker placeholder="请选择检查日期" />
+          <DatePicker
+            placeholder="请选择检查日期"
+            disabledDate={current =>
+              current &&
+              (current < moment().endOf('day') ||
+                current > moment().add(7, 'days').endOf('day'))
+            }
+          />
         </Form.Item>
-        <Form.Item {...formTailLayout}>
-          <Button type="dashed" htmlType="reset" shape="round">
+        <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+          <Button
+            className={styles.button}
+            htmlType="reset"
+            type="dashed"
+            shape="round"
+            onClick={() => navigate(-1)}
+          >
             取消
           </Button>
           <Button
-            type="primary"
+            className={styles.button}
             htmlType="submit"
+            type="primary"
             shape="round"
-            style={{ margin: 10 }}
+            disabled={isLoading}
           >
             提交
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </PageHeader>
   );
 };
 

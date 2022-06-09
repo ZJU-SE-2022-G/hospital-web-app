@@ -45,6 +45,36 @@ const apiSlice = createApi({
         ),
       }),
     }),
+
+    getDepartmentInfo: build.query<any, void>({
+      query: () => '/departmentIntro/fetch-all',
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getDepartmentDetail: build.query<any, any>({
+      query: id => `/departmentIntro/${id}`,
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getDoctorInfo: build.query<any, void>({
+      query: () => '/doctorIntro/fetch-all',
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getDoctorDetail: build.query<any, any>({
+      query: id => `/doctorIntro/${id}`,
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getIllnessInfo: build.query<any, void>({
+      query: () => '/illnessIntro/fetch-all',
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getIllnessDetail: build.query<any, any>({
+      query: id => `/illnessIntro/${id}`,
+      transformResponse: (response: any) => response.data,
+    }),
   }),
 });
 
@@ -54,4 +84,10 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useGetEpidemicMapQuery,
+  useGetDepartmentInfoQuery,
+  useGetDepartmentDetailQuery,
+  useGetDoctorInfoQuery,
+  useGetDoctorDetailQuery,
+  useGetIllnessInfoQuery,
+  useGetIllnessDetailQuery,
 } = apiSlice;

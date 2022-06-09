@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: () => '/news/wap/fymap2020_data.d.json',
       },
+      '/api': {
+        target: 'http://localhost:18080',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
     },
   },
 });

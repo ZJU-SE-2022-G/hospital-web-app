@@ -1,5 +1,5 @@
-.page {
-  max-width: 450px;
+.form {
+  max-width: min(450px, 80%);
   margin: auto;
 }
 

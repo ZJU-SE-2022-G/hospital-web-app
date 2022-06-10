@@ -12,12 +12,12 @@ import {
   message,
 } from 'antd';
 import { useReserveVaccineMutation } from '../../apis/apiSlice';
-import styles from './NucleicPage.module.css';
+import styles from '../../styles/Form.module.css';
 
 const VaccinePage: React.FC = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [reserve, { isLoading }] = useReserveVaccineMutation();
-  const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     try {
@@ -29,7 +29,7 @@ const VaccinePage: React.FC = () => {
         vacNum: values['vaccine-number'],
         vacDate: values['vaccine-date'].format('YYYY-MM-DD'),
       }).unwrap();
-      navigate('/');
+      navigate(-1);
       message.success('预约成功');
     } catch (err: any) {
       message.error(err.message || err.status);
@@ -37,7 +37,7 @@ const VaccinePage: React.FC = () => {
   };
 
   return (
-    <PageHeader className={styles.page} title="疫苗接种预约">
+    <PageHeader className={styles.form} title="疫苗接种预约">
       <Form
         form={form}
         name="vaccine"

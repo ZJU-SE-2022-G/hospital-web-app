@@ -11,12 +11,12 @@ import {
   message,
 } from 'antd';
 import { useReserveNucleicMutation } from '../../apis/apiSlice';
-import styles from './NucleicPage.module.css';
+import styles from '../../styles/Form.module.css';
 
 const NucleicPage: React.FC = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [reserve, { isLoading }] = useReserveNucleicMutation();
-  const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     try {
@@ -26,7 +26,7 @@ const NucleicPage: React.FC = () => {
         testType: values['nucleic-type'],
         testDate: values['nucleic-date'].format('YYYY-MM-DD'),
       }).unwrap();
-      navigate('/');
+      navigate(-1);
       message.success('预约成功');
     } catch (err: any) {
       message.error(err.message || err.status);
@@ -34,7 +34,7 @@ const NucleicPage: React.FC = () => {
   };
 
   return (
-    <PageHeader className={styles.page} title="核酸检测预约">
+    <PageHeader className={styles.form} title="核酸检测预约">
       <Form
         form={form}
         name="nucleic"

@@ -6,13 +6,13 @@ import {
   useRegisterUserMutation,
   useLoginUserMutation,
 } from '../../apis/apiSlice';
-import styles from './RegisterPage.module.css';
+import styles from '../../styles/Form.module.css';
 
 const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [register, { isLoading: registerLoading }] = useRegisterUserMutation();
   const [login, { isLoading: loginLoading }] = useLoginUserMutation();
-  const navigate = useNavigate();
 
   const isLoading = registerLoading || loginLoading;
 

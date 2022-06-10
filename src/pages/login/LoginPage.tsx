@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import LoginLayout from '../../layouts/LoginLayout';
 import { useLoginUserMutation } from '../../apis/apiSlice';
-import styles from './LoginPage.module.css';
+import styles from '../../styles/Form.module.css';
 
 const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [login, { isLoading }] = useLoginUserMutation();
-  const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     try {

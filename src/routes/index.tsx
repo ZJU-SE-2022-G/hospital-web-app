@@ -6,6 +6,7 @@ import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
 import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
+import NoticePublishPage from '../pages/notices/NoticePublishPage';
 import NoticeListPage from '../pages/notices/NoticeListPage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
 import DepartmentInfo from '../pages/departments/DepartmentInfo';
@@ -46,7 +47,7 @@ const Routes: React.FC = () =>
           path: 'reserves',
           children: [{ index: true }, { path: ':reserveId' }],
         },
-        { path: 'notice' },
+        { path: 'notice', element: <NoticePublishPage /> },
         {
           path: 'notices',
           children: [

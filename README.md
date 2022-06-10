@@ -46,7 +46,8 @@ yarn dev --host
 - pages：页面和页面级组件
 - routes：路由配置
 - stores：全局状态管理
-- types：类型定义
+- styles：通用样式
+- types：全局类型定义
 - utils：工具方法
 - App.tsx：应用入口
 - index.css：全局样式

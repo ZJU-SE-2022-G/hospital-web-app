@@ -38,6 +38,14 @@ const apiSlice = createApi({
         unwrap(response),
     }),
 
+    issueNotice: build.mutation<void, IssueNoticeRequest>({
+      query: request => ({
+        url: `/notice/create?${stringify(request)}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+    }),
+
     getEpidemicMap: build.query<any, void>({
       query: () => '/epidemic/map',
       transformResponse: (response: any) => ({
@@ -75,6 +83,7 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useGetNoticesQuery,
+  useIssueNoticeMutation,
   useGetEpidemicMapQuery,
   useReserveNucleicMutation,
   useReserveVaccineMutation,

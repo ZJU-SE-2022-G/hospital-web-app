@@ -1,15 +1,21 @@
 declare interface Notice {
   id: number;
-  title: string;
   authorId: number;
+  title: string;
+  content: string;
   releaseTime: string;
   updateTime: string;
   version: number;
   deleted: number;
-  content: string;
 }
 
 declare interface GetNoticesRequest {
   p: number;
   pageSize: number;
+}
+
+declare interface IssueNoticeRequest {
+  authorId: number;
+  title: string;
+  content: string;
 }

@@ -1,4 +1,4 @@
-import { Typography } from 'antd';
+import { Descriptions, Typography } from 'antd';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetDoctorDetailQuery } from '../../apis/apiSlice';
@@ -17,12 +17,12 @@ const DoctorInfo: React.FC = () => {
   ) : (
     <div>
       <Title level={4}>{docName}</Title>
-      <span>
-        年龄：{age} <br />
-        性别：{sex} <br />
-        所属科室：{department} <br />
-        {docDetail}
-      </span>
+      <Descriptions bordered>
+        <Descriptions.Item label="年龄">{age}</Descriptions.Item>
+        <Descriptions.Item label="性别">{sex}</Descriptions.Item>
+        <Descriptions.Item label="所属科室">{department}</Descriptions.Item>
+        <Descriptions.Item label="详细介绍">{docDetail}</Descriptions.Item>
+      </Descriptions>
     </div>
   );
 };

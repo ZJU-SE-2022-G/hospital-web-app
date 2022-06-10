@@ -23,10 +23,18 @@ const HomePage: React.FC = () => {
     </div>
   ));
 
-  const notices: Notice[] = [
-    { id: 1, title: '软件工程本周周末前上传需求报告', date: new Date() },
-    { id: 2, title: '软件工程本周周末前上传设计报告', date: new Date() },
-  ];
+  const notices: Notice[] = [...new Array(10).keys()]
+    .map(index => ({
+      id: index,
+      title: `软件工程本周周末前上传需求报告 ${index}`,
+      authorId: index,
+      releaseTime: moment().subtract(index, 'days').format('YYYY-MM-DD'),
+      updateTime: moment().subtract(index, 'days').format('YYYY-MM-DD'),
+      version: 1,
+      deleted: 0,
+      content: `软件工程本周周末前上传需求报告，软件工程本周周末前上传需求报告 ${index}`,
+    }))
+    .slice(0, 2);
 
   return (
     <>
@@ -47,15 +55,15 @@ const HomePage: React.FC = () => {
                 split={false}
                 dataSource={notices}
                 renderItem={item => (
-                  <List.Item className={styles.noticeItem}>
+                  <List.Item
+                    className={styles.noticeItem}
+                    actions={[item.releaseTime]}
+                  >
                     <Link to={`/notices/${item.id}`}>
                       <Text>
                         <Tag color="red">NEW</Tag> {item.title}
                       </Text>
                     </Link>
-                    <Text type="secondary">
-                      {moment(item.date).format('YYYY-MM-DD')}
-                    </Text>
                   </List.Item>
                 )}
               />

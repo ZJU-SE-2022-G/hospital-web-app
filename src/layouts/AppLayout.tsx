@@ -9,7 +9,7 @@ const { Content } = Layout;
 const AppLayout: React.FC = () => (
   <Layout className={styles.layout}>
     <AppHeader />
-    <Content>
+    <Content className={styles.content}>
       <Outlet />
     </Content>
   </Layout>

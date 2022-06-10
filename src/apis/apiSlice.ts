@@ -3,6 +3,13 @@ import { stringify } from 'qs';
 
 const SUCCESS = 200;
 
+const unwrap: <T>(response: ApiResponse<T>) => T = response => {
+  if (response.state !== SUCCESS) {
+    throw response;
+  }
+  return response.data;
+};
+
 const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   tagTypes: ['User'],
@@ -12,11 +19,7 @@ const apiSlice = createApi({
         url: `/users/reg?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<void>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-      },
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
       invalidatesTags: ['User'],
     }),
 
@@ -25,13 +28,14 @@ const apiSlice = createApi({
         url: `/users/loginByPhone?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<User>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-        return response.data;
-      },
+      transformResponse: (response: ApiResponse<User>) => unwrap(response),
       invalidatesTags: ['User'],
+    }),
+
+    getNotices: build.query<Page<Notice>, GetNoticesRequest>({
+      query: request => `/notice/page?${stringify(request)}`,
+      transformResponse: (response: ApiResponse<Page<Notice>>) =>
+        unwrap(response),
     }),
 
     getEpidemicMap: build.query<any, void>({
@@ -52,11 +56,7 @@ const apiSlice = createApi({
         url: `/nucTestApp/insert?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<void>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-      },
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
     }),
 
     reserveVaccine: build.mutation<void, ReserveVaccineRequest>({
@@ -64,11 +64,7 @@ const apiSlice = createApi({
         url: `/vacApp/insert?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<void>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-      },
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
     }),
   }),
 });
@@ -78,6 +74,7 @@ export { apiSlice };
 export const {
   useRegisterUserMutation,
   useLoginUserMutation,
+  useGetNoticesQuery,
   useGetEpidemicMapQuery,
   useReserveNucleicMutation,
   useReserveVaccineMutation,

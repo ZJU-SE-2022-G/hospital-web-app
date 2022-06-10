@@ -6,6 +6,7 @@ import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
 import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
+import NoticeListPage from '../pages/notices/NoticeListPage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
 import DepartmentInfo from '../pages/departments/DepartmentInfo';
 import DoctorListPage from '../pages/doctors/DoctorListPage';
@@ -48,7 +49,10 @@ const Routes: React.FC = () =>
         { path: 'notice' },
         {
           path: 'notices',
-          children: [{ index: true }, { path: ':noticeId' }],
+          children: [
+            { index: true, element: <NoticeListPage /> },
+            { path: ':noticeId' },
+          ],
         },
         { path: 'help', children: [{ index: true }, { path: ':helpId' }] },
         { path: 'feedback' },

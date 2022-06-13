@@ -67,6 +67,36 @@ const apiSlice = createApi({
       }),
     }),
 
+    listDepartments: build.query<any, void>({
+      query: () => '/departmentIntro/fetch-all',
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getDepartment: build.query<any, any>({
+      query: id => `/departmentIntro/${id}`,
+      transformResponse: (response: any) => response.data,
+    }),
+
+    listDoctors: build.query<any, void>({
+      query: () => '/doctorIntro/fetch-all',
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getDoctor: build.query<any, any>({
+      query: id => `/doctorIntro/${id}`,
+      transformResponse: (response: any) => response.data,
+    }),
+
+    listIllnesses: build.query<any, void>({
+      query: () => '/illnessIntro/fetch-all',
+      transformResponse: (response: any) => response.data,
+    }),
+
+    getIllness: build.query<any, any>({
+      query: id => `/illnessIntro/${id}`,
+      transformResponse: (response: any) => response.data,
+    }),
+
     createNucleicReservation: build.mutation<
       void,
       CreateNucleicReservationRequest
@@ -100,6 +130,12 @@ export const {
   useGetNoticeQuery,
   useCreateNoticeMutation,
   useGetEpidemicMapQuery,
+  useListDepartmentsQuery,
+  useGetDepartmentQuery,
+  useListDoctorsQuery,
+  useGetDoctorQuery,
+  useListIllnessesQuery,
+  useGetIllnessQuery,
   useCreateNucleicReservationMutation,
   useCreateVaccineReservationMutation,
 } = apiSlice;

@@ -1,0 +1,13 @@
+.page {
+  max-width: min(576px, 80%);
+  margin: auto;
+}
+
+.largePage {
+  max-width: min(992px, 80%);
+  margin: auto;
+}
+
+.button {
+  margin: 5px;
+}

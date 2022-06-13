@@ -11,16 +11,17 @@ import {
   Button,
   message,
 } from 'antd';
-import { useReserveVaccineMutation } from '../../apis/apiSlice';
-import styles from './NucleicPage.module.css';
+import { useCreateVaccineReservationMutation } from '../../apis/apiSlice';
+import styles from '../../styles/Page.module.css';
 
 const VaccinePage: React.FC = () => {
-  const [form] = Form.useForm();
-  const [reserve, { isLoading }] = useReserveVaccineMutation();
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [reserve, { isLoading }] = useCreateVaccineReservationMutation();
 
   const onFinish = async (values: any) => {
     try {
+      console.log(values);
       await reserve({
         usrId: values['id'],
         usrName: values['name'],
@@ -43,7 +44,6 @@ const VaccinePage: React.FC = () => {
         name="vaccine"
         labelAlign="left"
         labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
         validateTrigger="onBlur"
         onFinish={onFinish}
       >
@@ -92,7 +92,11 @@ const VaccinePage: React.FC = () => {
         >
           <Radio.Group
             name="vaccine-number"
-            options={['第一针', '第二针', '第三针']}
+            options={[
+              { label: '第一针', value: 1 },
+              { label: '第二针', value: 2 },
+              { label: '第三针', value: 3 },
+            ]}
           />
         </Form.Item>
         <Form.Item
@@ -108,7 +112,7 @@ const VaccinePage: React.FC = () => {
             }
           />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+        <Form.Item label=" " colon={false}>
           <Button
             className={styles.button}
             htmlType="reset"

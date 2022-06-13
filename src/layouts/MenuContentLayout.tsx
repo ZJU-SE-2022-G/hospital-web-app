@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Layout, Menu, MenuProps } from 'antd';
+import { Layout, Menu } from 'antd';
+import type { MenuProps } from 'antd';
 import styles from './MenuContentLayout.module.css';
 
 const { Sider, Content } = Layout;
@@ -21,7 +22,9 @@ const MenuContentLayout: React.FC<MenuContentLayoutProps> = ({
       <Sider className={styles.sider}>
         <Menu
           items={menuItems}
-          onClick={e => navigate(`${route}/${e.key === 'index' ? '' : e.key}`)}
+          onClick={e =>
+            navigate(e.key === 'index' ? route : `${route}/${e.key}`)
+          }
         />
       </Sider>
       <Content className={styles.content}>

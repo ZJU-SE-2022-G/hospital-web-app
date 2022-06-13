@@ -10,13 +10,13 @@ import {
   Button,
   message,
 } from 'antd';
-import { useReserveNucleicMutation } from '../../apis/apiSlice';
-import styles from './NucleicPage.module.css';
+import { useCreateNucleicReservationMutation } from '../../apis/apiSlice';
+import styles from '../../styles/Page.module.css';
 
 const NucleicPage: React.FC = () => {
-  const [form] = Form.useForm();
-  const [reserve, { isLoading }] = useReserveNucleicMutation();
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [reserve, { isLoading }] = useCreateNucleicReservationMutation();
 
   const onFinish = async (values: any) => {
     try {
@@ -40,7 +40,6 @@ const NucleicPage: React.FC = () => {
         name="nucleic"
         labelAlign="left"
         labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
         validateTrigger="onBlur"
         onFinish={onFinish}
       >
@@ -88,7 +87,7 @@ const NucleicPage: React.FC = () => {
             }
           />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+        <Form.Item label=" " colon={false}>
           <Button
             className={styles.button}
             htmlType="reset"

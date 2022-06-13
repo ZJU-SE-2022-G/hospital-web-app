@@ -22,7 +22,7 @@
 }
 
 .noticeInnerWrapper .noticeTitle {
-  margin: 0px 20px;
+  margin: 0 20px;
 }
 
 .noticeList {
@@ -30,5 +30,5 @@
 }
 
 .noticeItem {
-  padding: 1px 20px 1px 0px;
+  padding: 1px 20px 1px 0;
 }

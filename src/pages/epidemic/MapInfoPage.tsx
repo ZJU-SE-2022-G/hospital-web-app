@@ -5,7 +5,7 @@ import china from '../../libs/china.json';
 import { useGetEpidemicMapQuery } from '../../apis/apiSlice';
 
 const MapInfoPage: React.FC = () => {
-  const { data, isLoading } = useGetEpidemicMapQuery();
+  const { data, isFetching } = useGetEpidemicMapQuery();
 
   const option = data
     ? {
@@ -74,7 +74,7 @@ const MapInfoPage: React.FC = () => {
       }
     : {
         title: {
-          text: isLoading ? '加载中' : '加载失败',
+          text: isFetching ? '加载中' : '加载失败',
           left: '40%',
           top: 50,
         },

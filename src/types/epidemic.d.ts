@@ -1,15 +1,15 @@
-declare interface ReserveNucleicRequest {
+declare interface CreateNucleicReservationRequest {
   usrId: string;
   usrName: string;
   testType: string;
   testDate: string;
 }
 
-declare interface ReserveVaccineRequest {
+declare interface CreateVaccineReservationRequest {
   usrId: string;
   usrName: string;
   age: number;
   sex: string;
-  vacNum: string;
+  vacNum: number;
   vacDate: string;
 }

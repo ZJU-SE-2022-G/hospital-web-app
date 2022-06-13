@@ -4,11 +4,13 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "lint": "tsc",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "@toast-ui/react-editor": "^3.1.7",
     "ahooks": "^3.3.8",
     "antd": "^4.20.0",
     "echarts": "^5.3.2",

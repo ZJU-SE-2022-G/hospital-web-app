@@ -3,35 +3,55 @@ import { stringify } from 'qs';
 
 const SUCCESS = 200;
 
+const unwrap = <T>(response: ApiResponse<T>) => {
+  if (response.state !== SUCCESS) {
+    throw response;
+  }
+  return response.data;
+};
+
 const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['User'],
+  tagTypes: ['User', 'Notice'],
   endpoints: build => ({
-    registerUser: build.mutation<void, RegisterUserRequest>({
+    createUser: build.mutation<void, CreateUserRequest>({
       query: request => ({
         url: `/users/reg?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<void>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-      },
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
       invalidatesTags: ['User'],
     }),
 
-    loginUser: build.mutation<User, LoginUserRequest>({
+    createSession: build.mutation<User, CreateSessionRequest>({
       query: request => ({
         url: `/users/loginByPhone?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<User>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-        return response.data;
-      },
+      transformResponse: (response: ApiResponse<User>) => unwrap(response),
       invalidatesTags: ['User'],
+    }),
+
+    listNotices: build.query<Page<Notice>, ListNoticesRequest>({
+      query: request => `/notice/page?${stringify(request)}`,
+      transformResponse: (response: ApiResponse<Page<Notice>>) =>
+        unwrap(response),
+      providesTags: [{ type: 'Notice', id: 'LIST' }],
+    }),
+
+    getNotice: build.query<Notice, GetNoticeRequest>({
+      query: request => `/notice/getById?${stringify(request)}`,
+      transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
+    }),
+
+    createNotice: build.mutation<void, CreateNoticeRequest>({
+      query: request => ({
+        url: '/notice/create',
+        method: 'POST',
+        body: request,
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: [{ type: 'Notice', id: 'LIST' }],
     }),
 
     getEpidemicMap: build.query<any, void>({
@@ -47,28 +67,26 @@ const apiSlice = createApi({
       }),
     }),
 
-    reserveNucleic: build.mutation<void, ReserveNucleicRequest>({
+    createNucleicReservation: build.mutation<
+      void,
+      CreateNucleicReservationRequest
+    >({
       query: request => ({
         url: `/nucTestApp/insert?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<void>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-      },
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
     }),
 
-    reserveVaccine: build.mutation<void, ReserveVaccineRequest>({
+    createVaccineReservation: build.mutation<
+      void,
+      CreateVaccineReservationRequest
+    >({
       query: request => ({
         url: `/vacApp/insert?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<void>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-      },
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
     }),
   }),
 });
@@ -76,9 +94,12 @@ const apiSlice = createApi({
 export { apiSlice };
 
 export const {
-  useRegisterUserMutation,
-  useLoginUserMutation,
+  useCreateUserMutation,
+  useCreateSessionMutation,
+  useListNoticesQuery,
+  useGetNoticeQuery,
+  useCreateNoticeMutation,
   useGetEpidemicMapQuery,
-  useReserveNucleicMutation,
-  useReserveVaccineMutation,
+  useCreateNucleicReservationMutation,
+  useCreateVaccineReservationMutation,
 } = apiSlice;

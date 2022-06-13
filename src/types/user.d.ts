@@ -6,14 +6,14 @@ declare interface User {
   isAdmin: number;
 }
 
-declare interface LoginUserRequest {
+declare interface CreateUserRequest {
+  id: string;
+  name: string;
   phone: string;
   password: string;
 }
 
-declare interface RegisterUserRequest {
-  id: string;
-  name: string;
+declare interface CreateSessionRequest {
   phone: string;
   password: string;
 }

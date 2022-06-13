@@ -23,7 +23,7 @@ const LoginLayout: React.FC<LoginLayoutProps> = ({ children }) => (
             医院网上预约系统
           </Title>
         </div>
-        {children}
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   </div>

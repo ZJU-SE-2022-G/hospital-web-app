@@ -1,21 +1,22 @@
-import { Typography } from 'antd';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetDepartmentDetailQuery } from '../../apis/apiSlice';
+import { Spin, Typography } from 'antd';
+import { useGetDepartmentQuery } from '../../apis/apiSlice';
+
+const { Title, Paragraph } = Typography;
 
 const DepartmentInfo: React.FC = () => {
-  const { Title } = Typography;
   const { departmentId } = useParams();
-  const { data, isFetching } = useGetDepartmentDetailQuery(departmentId);
-  const title = isFetching ? undefined : data[0].name;
-  const info = isFetching ? undefined : data[0].detail;
-  return isFetching ? (
-    <span>加载中...</span>
-  ) : (
-    <div>
+  const { data, isFetching } = useGetDepartmentQuery(departmentId);
+
+  const title = data?.[0]?.name;
+  const info = data?.[0]?.detail;
+
+  return (
+    <Spin spinning={isFetching}>
       <Title level={4}>{title}</Title>
-      <span>{info}</span>
-    </div>
+      <Paragraph>{info}</Paragraph>
+    </Spin>
   );
 };
 

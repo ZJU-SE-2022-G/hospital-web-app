@@ -1,36 +1,57 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { stringify } from 'qs';
 
 const SUCCESS = 200;
 
+const unwrap = <T>(response: ApiResponse<T>) => {
+  if (response.state !== SUCCESS) {
+    throw response;
+  }
+  return response.data;
+};
+
 const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['User'],
+  tagTypes: ['User', 'Notice'],
   endpoints: build => ({
-    registerUser: build.mutation<void, RegisterUserRequest>({
-      query: ({ id, name, phone, password }) => ({
-        url: `/users/reg?id=${id}&name=${name}&phone=${phone}&password=${password}`,
+    createUser: build.mutation<void, CreateUserRequest>({
+      query: request => ({
+        url: `/users/reg?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<void>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-      },
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
       invalidatesTags: ['User'],
     }),
 
-    loginUser: build.mutation<User, LoginUserRequest>({
-      query: ({ phone, password }) => ({
-        url: `/users/loginByPhone?phone=${phone}&password=${password}`,
+    createSession: build.mutation<User, CreateSessionRequest>({
+      query: request => ({
+        url: `/users/loginByPhone?${stringify(request)}`,
         method: 'POST',
       }),
-      transformResponse: (response: ApiResponse<User>) => {
-        if (response.state !== SUCCESS) {
-          throw response;
-        }
-        return response.data;
-      },
+      transformResponse: (response: ApiResponse<User>) => unwrap(response),
       invalidatesTags: ['User'],
+    }),
+
+    listNotices: build.query<Page<Notice>, ListNoticesRequest>({
+      query: request => `/notice/page?${stringify(request)}`,
+      transformResponse: (response: ApiResponse<Page<Notice>>) =>
+        unwrap(response),
+      providesTags: [{ type: 'Notice', id: 'LIST' }],
+    }),
+
+    getNotice: build.query<Notice, GetNoticeRequest>({
+      query: request => `/notice/getById?${stringify(request)}`,
+      transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
+    }),
+
+    createNotice: build.mutation<void, CreateNoticeRequest>({
+      query: request => ({
+        url: '/notice/create',
+        method: 'POST',
+        body: request,
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: [{ type: 'Notice', id: 'LIST' }],
     }),
 
     getEpidemicMap: build.query<any, void>({
@@ -46,34 +67,56 @@ const apiSlice = createApi({
       }),
     }),
 
-    getDepartmentInfo: build.query<any, void>({
+    listDepartments: build.query<any, void>({
       query: () => '/departmentIntro/fetch-all',
       transformResponse: (response: any) => response.data,
     }),
 
-    getDepartmentDetail: build.query<any, any>({
+    getDepartment: build.query<any, any>({
       query: id => `/departmentIntro/${id}`,
       transformResponse: (response: any) => response.data,
     }),
 
-    getDoctorInfo: build.query<any, void>({
+    listDoctors: build.query<any, void>({
       query: () => '/doctorIntro/fetch-all',
       transformResponse: (response: any) => response.data,
     }),
 
-    getDoctorDetail: build.query<any, any>({
+    getDoctor: build.query<any, any>({
       query: id => `/doctorIntro/${id}`,
       transformResponse: (response: any) => response.data,
     }),
 
-    getIllnessInfo: build.query<any, void>({
+    listIllnesses: build.query<any, void>({
       query: () => '/illnessIntro/fetch-all',
       transformResponse: (response: any) => response.data,
     }),
 
-    getIllnessDetail: build.query<any, any>({
+    getIllness: build.query<any, any>({
       query: id => `/illnessIntro/${id}`,
       transformResponse: (response: any) => response.data,
+    }),
+
+    createNucleicReservation: build.mutation<
+      void,
+      CreateNucleicReservationRequest
+    >({
+      query: request => ({
+        url: `/nucTestApp/insert?${stringify(request)}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+    }),
+
+    createVaccineReservation: build.mutation<
+      void,
+      CreateVaccineReservationRequest
+    >({
+      query: request => ({
+        url: `/vacApp/insert?${stringify(request)}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
     }),
   }),
 });
@@ -81,13 +124,18 @@ const apiSlice = createApi({
 export { apiSlice };
 
 export const {
-  useRegisterUserMutation,
-  useLoginUserMutation,
+  useCreateUserMutation,
+  useCreateSessionMutation,
+  useListNoticesQuery,
+  useGetNoticeQuery,
+  useCreateNoticeMutation,
   useGetEpidemicMapQuery,
-  useGetDepartmentInfoQuery,
-  useGetDepartmentDetailQuery,
-  useGetDoctorInfoQuery,
-  useGetDoctorDetailQuery,
-  useGetIllnessInfoQuery,
-  useGetIllnessDetailQuery,
+  useListDepartmentsQuery,
+  useGetDepartmentQuery,
+  useListDoctorsQuery,
+  useGetDoctorQuery,
+  useListIllnessesQuery,
+  useGetIllnessQuery,
+  useCreateNucleicReservationMutation,
+  useCreateVaccineReservationMutation,
 } = apiSlice;

@@ -4,8 +4,10 @@
 
 .sider {
   background: #ffffff;
+  overflow: auto;
 }
 
 .content {
-  padding: 2rem;
+  padding: 40px;
+  overflow: auto;
 }

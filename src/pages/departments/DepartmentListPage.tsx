@@ -1,31 +1,29 @@
 import React from 'react';
-import { MenuProps } from 'antd';
+import { Typography } from 'antd';
+import type { MenuProps } from 'antd';
 import { UsergroupAddOutlined } from '@ant-design/icons';
+import { useListDepartmentsQuery } from '../../apis/apiSlice';
 import MenuContentLayout from '../../layouts/MenuContentLayout';
-import { useGetDepartmentInfoQuery } from '../../apis/apiSlice';
+
+const { Text } = Typography;
 
 const DepartmentListPage: React.FC = () => {
-  const { data, isFetching } = useGetDepartmentInfoQuery();
-  const items: MenuProps['items'] = isFetching
-    ? undefined
-    : [
-        { key: 'index', label: '科室首页' },
-        {
-          type: 'group',
-          label: '科室列表',
-          children: data.map((item: any) => ({
-            key: item.id,
-            label: item.name,
-            icon: <UsergroupAddOutlined />,
-          })),
-        },
-      ];
+  const { data } = useListDepartmentsQuery();
 
-  return isFetching ? (
-    <span>加载中...</span>
-  ) : (
-    <MenuContentLayout route="/departments" menuItems={items} />
-  );
+  const items: MenuProps['items'] = [
+    { key: 'index', label: <Text strong>科室介绍</Text> },
+    {
+      type: 'group',
+      label: '科室列表',
+      children: data?.map((item: any) => ({
+        key: item.id,
+        label: item.name,
+        icon: <UsergroupAddOutlined />,
+      })),
+    },
+  ];
+
+  return <MenuContentLayout route="/departments" menuItems={items} />;
 };
 
 export default DepartmentListPage;

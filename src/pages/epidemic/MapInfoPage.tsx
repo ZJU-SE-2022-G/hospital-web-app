@@ -1,21 +1,14 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
 import EChartsReact from 'echarts-for-react';
 import china from '../../libs/china.json';
 import { useGetEpidemicMapQuery } from '../../apis/apiSlice';
 
 const MapInfoPage: React.FC = () => {
-  const { data, isLoading } = useGetEpidemicMapQuery();
+  const { data, isFetching } = useGetEpidemicMapQuery();
 
-  const option = isLoading
+  const option = data
     ? {
-        title: {
-          text: '加载中...',
-          left: '40%',
-          top: 50,
-        },
-      }
-    : {
         title: {
           text: '中国疫情地图',
           subtext: data.updateTime,
@@ -77,6 +70,13 @@ const MapInfoPage: React.FC = () => {
               '#500312',
             ],
           },
+        },
+      }
+    : {
+        title: {
+          text: isFetching ? '加载中' : '加载失败',
+          left: '40%',
+          top: 50,
         },
       };
 

@@ -2,8 +2,13 @@ import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import AppLayout from '../layouts/AppLayout';
 import HomePage from '../pages/home/HomePage';
+import RegisterPage from '../pages/register/RegisterPage';
+import LoginPage from '../pages/login/LoginPage';
 import UserListPage from '../pages/users/UserListPage';
 import UserInfoPage from '../pages/users/UserInfoPage';
+import NoticeIssuePage from '../pages/notices/NoticeIssuePage';
+import NoticeListPage from '../pages/notices/NoticeListPage';
+import NoticeDetailPage from '../pages/notices/NoticeDetailPage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
 import DepartmentInfo from '../pages/departments/DepartmentInfo';
 import DoctorListPage from '../pages/doctors/DoctorListPage';
@@ -11,8 +16,8 @@ import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
 import MapInfoPage from '../pages/epidemic/MapInfoPage';
-import RegisterPage from '../pages/register/RegisterPage';
-import LoginPage from '../pages/login/LoginPage';
+import NucleicPage from '../pages/epidemic/NucleicPage';
+import VaccinePage from '../pages/epidemic/VaccinePage';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -43,10 +48,13 @@ const Routes: React.FC = () =>
           path: 'reserves',
           children: [{ index: true }, { path: ':reserveId' }],
         },
-        { path: 'notice' },
+        { path: 'notice', element: <NoticeIssuePage /> },
         {
           path: 'notices',
-          children: [{ index: true }, { path: ':noticeId' }],
+          children: [
+            { index: true, element: <NoticeListPage /> },
+            { path: ':noticeId', element: <NoticeDetailPage /> },
+          ],
         },
         { path: 'help', children: [{ index: true }, { path: ':helpId' }] },
         { path: 'feedback' },
@@ -59,15 +67,15 @@ const Routes: React.FC = () =>
           children: [
             { index: true },
             { path: 'map', element: <MapInfoPage /> },
-            { path: 'nucleic' },
-            { path: 'vaccine' },
+            { path: 'nucleic', element: <NucleicPage /> },
+            { path: 'vaccine', element: <VaccinePage /> },
           ],
         },
         {
           path: 'departments',
           element: <DepartmentListPage />,
           children: [
-            { index: true, element: <span>请选择部门</span> },
+            { index: true, element: <span>请选择科室</span> },
             { path: ':departmentId', element: <DepartmentInfo /> },
           ],
         },

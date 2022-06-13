@@ -10,13 +10,13 @@
 }
 
 .titleWrapper {
-  padding-left: 5px;
+  margin-left: 5px;
   display: flex;
   flex-direction: column;
 }
 
 .titleWrapper .title {
-  margin: 0px;
+  margin: 0;
   color: #ffffff;
 }
 
@@ -30,7 +30,7 @@
   justify-content: flex-end;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 576px) {
   .titleWrapper {
     display: none;
   }

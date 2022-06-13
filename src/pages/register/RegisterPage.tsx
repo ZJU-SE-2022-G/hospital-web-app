@@ -1,29 +1,35 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import LoginLayout from '../../layouts/LoginLayout';
 import {
-  useRegisterUserMutation,
-  useLoginUserMutation,
+  useCreateUserMutation,
+  useCreateSessionMutation,
 } from '../../apis/apiSlice';
-import styles from './RegisterPage.module.css';
+import styles from '../../styles/Page.module.css';
 
 const RegisterPage: React.FC = () => {
-  const [form] = Form.useForm<RegisterUserRequest>();
-  const [register, { isLoading: registerLoading }] = useRegisterUserMutation();
-  const [login, { isLoading: loginLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [register, { isLoading: registerLoading }] = useCreateUserMutation();
+  const [login, { isLoading: loginLoading }] = useCreateSessionMutation();
 
   const isLoading = registerLoading || loginLoading;
 
-  const onFinish = async () => {
+  const onFinish = async (values: any) => {
     try {
-      await register(form.getFieldsValue()).unwrap();
+      await register({
+        id: values['id'],
+        name: values['name'],
+        phone: values['phone'],
+        password: values['password'],
+      }).unwrap();
       await login({
-        phone: form.getFieldValue('phone'),
-        password: form.getFieldValue('password'),
+        phone: values['phone'],
+        password: values['password'],
       }).unwrap();
       navigate('/');
+      message.success('注册成功');
     } catch (err: any) {
       message.error(err.message || err.status);
     }
@@ -32,12 +38,11 @@ const RegisterPage: React.FC = () => {
   return (
     <LoginLayout>
       <Form
-        className={styles.form}
+        className={styles.page}
         form={form}
         name="register"
         labelAlign="left"
         labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
         validateTrigger="onBlur"
         onFinish={onFinish}
       >
@@ -108,21 +113,20 @@ const RegisterPage: React.FC = () => {
         >
           <Input.Password />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
-          <Link to="/login">
-            <Button
-              className={styles.button}
-              type="dashed"
-              htmlType="reset"
-              shape="round"
-            >
-              取消
-            </Button>
-          </Link>
+        <Form.Item label=" " colon={false}>
           <Button
             className={styles.button}
-            type="primary"
+            htmlType="reset"
+            type="dashed"
+            shape="round"
+            onClick={() => navigate(-1)}
+          >
+            取消
+          </Button>
+          <Button
+            className={styles.button}
             htmlType="submit"
+            type="primary"
             shape="round"
             disabled={isLoading}
           >

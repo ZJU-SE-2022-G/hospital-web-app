@@ -46,8 +46,9 @@ const apiSlice = createApi({
 
     createNotice: build.mutation<void, CreateNoticeRequest>({
       query: request => ({
-        url: `/notice/create?${stringify(request)}`,
+        url: '/notice/create',
         method: 'POST',
+        body: request,
       }),
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
       invalidatesTags: [{ type: 'Notice', id: 'LIST' }],

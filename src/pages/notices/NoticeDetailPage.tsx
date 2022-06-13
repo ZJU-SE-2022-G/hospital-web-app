@@ -29,7 +29,7 @@ const NoticeDetailPage: React.FC = () => {
               {data.title}
             </Title>
             <Text className={styles.subTitle} type="secondary">
-              发布时间：{moment(data.releaseTime).format('YYYY-MM-DD')}
+              发布时间：{moment(data.releaseTime).format('YYYY-MM-DD HH:mm:ss')}
             </Text>
           </>
         )

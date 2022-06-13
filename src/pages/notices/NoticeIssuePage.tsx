@@ -1,38 +1,45 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageHeader, Form, Input, Button, message } from 'antd';
-import { useIssueNoticeMutation } from '../../apis/apiSlice';
-import styles from '../../styles/Form.module.css';
+import Editor from '../../components/Editor';
+import { useCreateNoticeMutation } from '../../apis/apiSlice';
+import { useBreadcrumbProps } from '../../utils/breadcrumb';
+import styles from '../../styles/Page.module.css';
 
-const { TextArea } = Input;
-
-const NoticePublishPage: React.FC = () => {
+const NoticeIssuePage: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [issue, { isLoading }] = useIssueNoticeMutation();
+  const [issue, { isLoading }] = useCreateNoticeMutation();
+  const breadcrumb = useBreadcrumbProps([
+    { path: '/', breadcrumbName: '首页' },
+    { path: '/notices', breadcrumbName: '院内公告' },
+    { path: '/notice', breadcrumbName: '发布公告' },
+  ]);
 
   const onFinish = async (values: any) => {
     try {
       await issue({
-        authorId: 0,
         title: values['title'],
         content: values['content'],
       }).unwrap();
-      navigate(-1);
-      message.success('登录成功');
+      navigate('/notices');
+      message.success('发布成功');
     } catch (err: any) {
       message.error(err.message || err.status);
     }
   };
 
   return (
-    <PageHeader className={styles.form} title="发布公告">
+    <PageHeader
+      className={styles.largePage}
+      title="发布公告"
+      breadcrumb={breadcrumb}
+    >
       <Form
         form={form}
         name="notice"
         labelAlign="left"
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
+        labelCol={{ sm: { span: 6 }, md: { span: 4 }, lg: { span: 3 } }}
         validateTrigger="onBlur"
         onFinish={onFinish}
       >
@@ -48,9 +55,9 @@ const NoticePublishPage: React.FC = () => {
           label="公告内容"
           rules={[{ required: true, message: '请输入公告内容' }]}
         >
-          <TextArea autoSize={{ minRows: 10 }} />
+          <Editor />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+        <Form.Item label=" " colon={false}>
           <Button
             className={styles.button}
             htmlType="reset"
@@ -75,4 +82,4 @@ const NoticePublishPage: React.FC = () => {
   );
 };
 
-export default NoticePublishPage;
+export default NoticeIssuePage;

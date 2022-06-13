@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import LoginLayout from '../../layouts/LoginLayout';
 import {
-  useRegisterUserMutation,
-  useLoginUserMutation,
+  useCreateUserMutation,
+  useCreateSessionMutation,
 } from '../../apis/apiSlice';
-import styles from '../../styles/Form.module.css';
+import styles from '../../styles/Page.module.css';
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [register, { isLoading: registerLoading }] = useRegisterUserMutation();
-  const [login, { isLoading: loginLoading }] = useLoginUserMutation();
+  const [register, { isLoading: registerLoading }] = useCreateUserMutation();
+  const [login, { isLoading: loginLoading }] = useCreateSessionMutation();
 
   const isLoading = registerLoading || loginLoading;
 
@@ -38,12 +38,11 @@ const RegisterPage: React.FC = () => {
   return (
     <LoginLayout>
       <Form
-        className={styles.form}
+        className={styles.page}
         form={form}
         name="register"
         labelAlign="left"
         labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
         validateTrigger="onBlur"
         onFinish={onFinish}
       >
@@ -114,7 +113,7 @@ const RegisterPage: React.FC = () => {
         >
           <Input.Password />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+        <Form.Item label=" " colon={false}>
           <Button
             className={styles.button}
             htmlType="reset"

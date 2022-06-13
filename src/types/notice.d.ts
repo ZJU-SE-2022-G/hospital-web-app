@@ -9,13 +9,16 @@ declare interface Notice {
   deleted: number;
 }
 
-declare interface GetNoticesRequest {
+declare interface ListNoticesRequest {
   p: number;
   pageSize: number;
 }
 
-declare interface IssueNoticeRequest {
-  authorId: number;
+declare interface GetNoticeRequest {
+  id: string;
+}
+
+declare interface CreateNoticeRequest {
   title: string;
   content: string;
 }

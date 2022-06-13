@@ -2,13 +2,13 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import LoginLayout from '../../layouts/LoginLayout';
-import { useLoginUserMutation } from '../../apis/apiSlice';
-import styles from '../../styles/Form.module.css';
+import { useCreateSessionMutation } from '../../apis/apiSlice';
+import styles from '../../styles/Page.module.css';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [login, { isLoading }] = useLoginUserMutation();
+  const [login, { isLoading }] = useCreateSessionMutation();
 
   const onFinish = async (values: any) => {
     try {
@@ -26,12 +26,11 @@ const LoginPage: React.FC = () => {
   return (
     <LoginLayout>
       <Form
-        className={styles.form}
+        className={styles.page}
         form={form}
         name="login"
         labelAlign="left"
         labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
         validateTrigger="onBlur"
         onFinish={onFinish}
       >
@@ -57,7 +56,7 @@ const LoginPage: React.FC = () => {
         >
           <Input.Password />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+        <Form.Item label=" " colon={false}>
           <Button
             className={styles.button}
             htmlType="reset"

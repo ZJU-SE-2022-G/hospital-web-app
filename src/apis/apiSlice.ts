@@ -12,11 +12,11 @@ const unwrap = <T>(response: ApiResponse<T>) => {
 
 const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['User', 'Notice', 'Help'],
+  tagTypes: ['User', 'Notice', 'Help', 'Feedback'],
   endpoints: build => ({
     getCurrentUser: build.query<User, void>({
       query: () => '/users/getInfo',
-      transformResponse: (response: ApiResponse<User>) => response?.data,
+      transformResponse: (response: ApiResponse<User>) => response.data,
       providesTags: ['User'],
     }),
 
@@ -39,8 +39,7 @@ const apiSlice = createApi({
 
     listNotices: build.query<Page<Notice>, ListNoticesRequest>({
       query: request => `/notice/page?${stringify(request)}`,
-      transformResponse: (response: ApiResponse<Page<Notice>>) =>
-        response?.data,
+      transformResponse: (response: ApiResponse<Page<Notice>>) => response.data,
       providesTags: [{ type: 'Notice', id: 'LIST' }],
     }),
 
@@ -61,7 +60,7 @@ const apiSlice = createApi({
 
     listHelps: build.query<Page<Help>, ListHelpsRequest>({
       query: request => `/guide/page?${stringify(request)}`,
-      transformResponse: (response: ApiResponse<Page<Help>>) => response?.data,
+      transformResponse: (response: ApiResponse<Page<Help>>) => response.data,
       providesTags: [{ type: 'Help', id: 'LIST' }],
     }),
 
@@ -82,6 +81,23 @@ const apiSlice = createApi({
       }),
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
       invalidatesTags: [{ type: 'Help', id: 'LIST' }],
+    }),
+
+    listFeedbacks: build.query<Page<Feedback>, ListFeedbacksRequest>({
+      query: request => `/problem-feedback/page?${stringify(request)}`,
+      transformResponse: (response: ApiResponse<Page<Feedback>>) =>
+        response.data,
+      providesTags: [{ type: 'Feedback', id: 'LIST' }],
+    }),
+
+    createFeedback: build.mutation<Feedback, CreateFeedbackRequest>({
+      query: request => ({
+        url: '/problem-feedback/create',
+        method: 'POST',
+        body: request,
+      }),
+      transformResponse: (response: ApiResponse<Feedback>) => unwrap(response),
+      invalidatesTags: [{ type: 'Feedback', id: 'LIST' }],
     }),
 
     getEpidemicMap: build.query<any, void>({
@@ -161,6 +177,7 @@ export const {
   useListHelpsQuery,
   useCreateHelpMutation,
   useDeleteHelpMutation,
+  useCreateFeedbackMutation,
   useGetEpidemicMapQuery,
   useCreateNucleicReservationMutation,
   useCreateVaccineReservationMutation,

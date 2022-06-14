@@ -5,6 +5,7 @@ import styles from '../styles/Page.module.css';
 
 interface TitleContentFormProps {
   name: string;
+  extra?: React.ReactNode;
   titleLabel: string;
   contentLabel: string;
   submitLabel: string;
@@ -15,6 +16,7 @@ interface TitleContentFormProps {
 
 const TitleContentForm: React.FC<TitleContentFormProps> = ({
   name,
+  extra,
   titleLabel,
   contentLabel,
   submitLabel,
@@ -33,6 +35,7 @@ const TitleContentForm: React.FC<TitleContentFormProps> = ({
       validateTrigger="onBlur"
       onFinish={onFinish}
     >
+      {extra}
       <Form.Item
         name="title"
         label={titleLabel}

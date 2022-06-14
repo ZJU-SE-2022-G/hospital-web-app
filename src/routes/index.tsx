@@ -9,6 +9,8 @@ import NoticeIssuePage from '../pages/notices/NoticeIssuePage';
 import NoticeListPage from '../pages/notices/NoticeListPage';
 import NoticeDetailPage from '../pages/notices/NoticeDetailPage';
 import HelpPage from '../pages/help/HelpPage';
+import FeedbackSendPage from '../pages/feedbacks/FeedbackSendPage';
+import FeedbackListPage from '../pages/feedbacks/FeedbackListPage';
 import MapInfoPage from '../pages/epidemic/MapInfoPage';
 import NucleicPage from '../pages/epidemic/NucleicPage';
 import VaccinePage from '../pages/epidemic/VaccinePage';
@@ -54,10 +56,13 @@ const Routes: React.FC = () =>
           ],
         },
         { path: 'help', element: <HelpPage /> },
-        { path: 'feedback' },
+        { path: 'feedback', element: <FeedbackSendPage /> },
         {
           path: 'feedbacks',
-          children: [{ index: true }, { path: ':feedbackId' }],
+          children: [
+            { index: true, element: <FeedbackListPage /> },
+            { path: ':feedbackId' },
+          ],
         },
         {
           path: 'epidemic',

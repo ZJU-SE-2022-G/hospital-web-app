@@ -4,17 +4,14 @@
 }
 
 .noticeOuterWrapper {
-  width: 100%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 5px;
   background: #6e3cbc;
 }
 
 .noticeInnerWrapper {
   width: 60%;
-  height: 60px;
+  margin: auto;
+  padding: 5px;
   display: flex;
   align-items: center;
   background: #ffffff;
@@ -31,4 +28,26 @@
 
 .noticeItem {
   padding: 1px 20px 1px 0;
+}
+
+.navigate {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 576px) {
+  .noticeInnerWrapper {
+    width: 80%;
+    flex-direction: column;
+  }
+
+  .noticeList {
+    width: 80%;
+  }
+
+  .noticeItem {
+    padding: 1px 0;
+  }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Layout,
   Row,
@@ -10,11 +10,8 @@ import {
   Menu,
   Dropdown,
 } from 'antd';
-import {
-  SearchOutlined,
-  UserOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import { ProfileOutlined } from '@ant-design/icons';
+import { useGetCurrentUserQuery } from '../apis/apiSlice';
 import favicon from '../assets/favicon.svg';
 import styles from './AppHeader.module.css';
 
@@ -22,15 +19,19 @@ const { Header } = Layout;
 const { Title, Text } = Typography;
 
 const AppHeader: React.FC = () => {
+  const navigate = useNavigate();
+  const { data: user } = useGetCurrentUserQuery();
+
   const menu = (
     <Menu
       items={[
         {
-          key: 'logout',
-          label: <span>退出登录</span>,
-          icon: <LogoutOutlined />,
+          key: '/user',
+          label: '个人信息',
+          icon: <ProfileOutlined />,
         },
       ]}
+      onClick={e => navigate(e.key)}
     />
   );
 
@@ -53,22 +54,17 @@ const AppHeader: React.FC = () => {
           </Link>
         </Col>
         <Col className={styles.buttons} span="6">
-          <Space>
-            <Button
-              shape="circle"
-              size="middle"
-              icon={<SearchOutlined />}
-              ghost
-            />
+          {user ? (
             <Dropdown overlay={menu}>
-              <Button
-                shape="circle"
-                size="middle"
-                icon={<UserOutlined />}
-                ghost
-              />
+              <Button shape="round" ghost>
+                您好，{user.name}
+              </Button>
             </Dropdown>
-          </Space>
+          ) : (
+            <Link to="/login">
+              <Button shape="round">登录 / 注册</Button>
+            </Link>
+          )}
         </Col>
       </Row>
     </Header>

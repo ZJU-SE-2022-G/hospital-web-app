@@ -12,12 +12,17 @@ import {
   message,
 } from 'antd';
 import { useCreateVaccineReservationMutation } from '../../apis/apiSlice';
+import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
 
 const VaccinePage: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [reserve, { isLoading }] = useCreateVaccineReservationMutation();
+  const breadcrumb = useBreadcrumbProps([
+    { path: '/', breadcrumbName: '首页' },
+    { path: '/epidemic/vaccine', breadcrumbName: '疫苗预约' },
+  ]);
 
   const onFinish = async (values: any) => {
     try {
@@ -38,7 +43,11 @@ const VaccinePage: React.FC = () => {
   };
 
   return (
-    <PageHeader className={styles.page} title="疫苗接种预约">
+    <PageHeader
+      className={styles.page}
+      title="疫苗接种预约"
+      breadcrumb={breadcrumb}
+    >
       <Form
         form={form}
         name="vaccine"
@@ -127,9 +136,9 @@ const VaccinePage: React.FC = () => {
             htmlType="submit"
             type="primary"
             shape="round"
-            disabled={isLoading}
+            loading={isLoading}
           >
-            提交
+            预约
           </Button>
         </Form.Item>
       </Form>

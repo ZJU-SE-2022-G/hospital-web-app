@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
-import LoginLayout from '../../layouts/LoginLayout';
 import {
   useCreateUserMutation,
   useCreateSessionMutation,
 } from '../../apis/apiSlice';
+import LoginLayout from '../../layouts/LoginLayout';
 import styles from '../../styles/Page.module.css';
 
 const RegisterPage: React.FC = () => {
@@ -128,7 +128,7 @@ const RegisterPage: React.FC = () => {
             htmlType="submit"
             type="primary"
             shape="round"
-            disabled={isLoading}
+            loading={isLoading}
           >
             注册
           </Button>

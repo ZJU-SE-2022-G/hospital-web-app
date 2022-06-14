@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
-import LoginLayout from '../../layouts/LoginLayout';
 import { useCreateSessionMutation } from '../../apis/apiSlice';
+import LoginLayout from '../../layouts/LoginLayout';
 import styles from '../../styles/Page.module.css';
 
 const LoginPage: React.FC = () => {
@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
             htmlType="submit"
             type="primary"
             shape="round"
-            disabled={isLoading}
+            loading={isLoading}
           >
             登录
           </Button>

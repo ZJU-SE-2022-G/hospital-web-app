@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
 import EChartsReact from 'echarts-for-react';
-import china from '../../libs/china.json';
 import { useGetEpidemicMapQuery } from '../../apis/apiSlice';
+import china from '../../libs/china.json';
 
 const MapInfoPage: React.FC = () => {
   const { data, isFetching } = useGetEpidemicMapQuery();

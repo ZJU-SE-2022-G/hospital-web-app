@@ -11,12 +11,17 @@ import {
   message,
 } from 'antd';
 import { useCreateNucleicReservationMutation } from '../../apis/apiSlice';
+import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
 
 const NucleicPage: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [reserve, { isLoading }] = useCreateNucleicReservationMutation();
+  const breadcrumb = useBreadcrumbProps([
+    { path: '/', breadcrumbName: '首页' },
+    { path: '/epidemic/nucleic', breadcrumbName: '核酸预约' },
+  ]);
 
   const onFinish = async (values: any) => {
     try {
@@ -34,7 +39,11 @@ const NucleicPage: React.FC = () => {
   };
 
   return (
-    <PageHeader className={styles.page} title="核酸检测预约">
+    <PageHeader
+      className={styles.page}
+      title="核酸检测预约"
+      breadcrumb={breadcrumb}
+    >
       <Form
         form={form}
         name="nucleic"
@@ -102,9 +111,9 @@ const NucleicPage: React.FC = () => {
             htmlType="submit"
             type="primary"
             shape="round"
-            disabled={isLoading}
+            loading={isLoading}
           >
-            提交
+            预约
           </Button>
         </Form.Item>
       </Form>

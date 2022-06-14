@@ -4,20 +4,19 @@ import AppLayout from '../layouts/AppLayout';
 import HomePage from '../pages/home/HomePage';
 import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
-import UserListPage from '../pages/users/UserListPage';
-import UserInfoPage from '../pages/users/UserInfoPage';
+import UserInfoPage from '../pages/user/UserInfoPage';
 import NoticeIssuePage from '../pages/notices/NoticeIssuePage';
 import NoticeListPage from '../pages/notices/NoticeListPage';
 import NoticeDetailPage from '../pages/notices/NoticeDetailPage';
+import MapInfoPage from '../pages/epidemic/MapInfoPage';
+import NucleicPage from '../pages/epidemic/NucleicPage';
+import VaccinePage from '../pages/epidemic/VaccinePage';
 import DepartmentListPage from '../pages/departments/DepartmentListPage';
 import DepartmentInfo from '../pages/departments/DepartmentInfo';
 import DoctorListPage from '../pages/doctors/DoctorListPage';
 import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
-import MapInfoPage from '../pages/epidemic/MapInfoPage';
-import NucleicPage from '../pages/epidemic/NucleicPage';
-import VaccinePage from '../pages/epidemic/VaccinePage';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -35,11 +34,8 @@ const Routes: React.FC = () =>
           element: <LoginPage />,
         },
         {
-          path: 'users',
-          children: [
-            { index: true, element: <UserListPage /> },
-            { path: ':userId', element: <UserInfoPage /> },
-          ],
+          path: 'user',
+          element: <UserInfoPage />,
         },
         { path: 'manage' },
         { path: 'search' },

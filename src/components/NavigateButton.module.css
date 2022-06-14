@@ -7,6 +7,11 @@
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 2px 2px 8px #aaaaaa;
+  transition: box-shadow 0.5s;
+}
+
+.button:hover {
+  box-shadow: 2px 2px 24px #aaaaaa;
 }
 
 .img {
@@ -15,6 +20,11 @@
   padding: 10px;
   background: #b8e4f0;
   border-radius: 50%;
+  transition: background 0.5s;
+}
+
+.button:hover .img {
+  background: #80e0ff;
 }
 
 .button .label {

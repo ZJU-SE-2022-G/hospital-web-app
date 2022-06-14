@@ -1,4 +1,4 @@
-declare interface Notice {
+declare interface Help {
   id: number;
   authorId: number;
   title: string;
@@ -9,16 +9,16 @@ declare interface Notice {
   deleted: number;
 }
 
-declare interface ListNoticesRequest {
+declare interface ListHelpsRequest {
   p: number;
   pageSize: number;
 }
 
-declare interface GetNoticeRequest {
-  id: string;
-}
-
-declare interface CreateNoticeRequest {
+declare interface CreateHelpRequest {
   title: string;
   content: string;
+}
+
+declare interface DeleteHelpRequest {
+  id: number;
 }

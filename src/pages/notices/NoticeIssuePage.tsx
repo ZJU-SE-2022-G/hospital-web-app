@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PageHeader, Form, Input, Button, message } from 'antd';
-import Editor from '../../components/Editor';
+import { PageHeader, message } from 'antd';
+import TitleContentForm from '../../components/TitleContentForm';
 import {
   useGetCurrentUserQuery,
   useCreateNoticeMutation,
@@ -11,7 +11,6 @@ import styles from '../../styles/Page.module.css';
 
 const NoticeIssuePage: React.FC = () => {
   const navigate = useNavigate();
-  const [form] = Form.useForm();
   const { data: user } = useGetCurrentUserQuery();
   const [issue, { isLoading }] = useCreateNoticeMutation();
   const breadcrumb = useBreadcrumbProps([
@@ -22,11 +21,11 @@ const NoticeIssuePage: React.FC = () => {
 
   const onFinish = async (values: any) => {
     try {
-      await issue({
+      const notice = await issue({
         title: values['title'],
         content: values['content'],
       }).unwrap();
-      navigate('/notices');
+      navigate(`/notices/${notice.id}`);
       message.success('发布成功');
     } catch (err: any) {
       message.error(err.message || err.status);
@@ -40,49 +39,15 @@ const NoticeIssuePage: React.FC = () => {
       breadcrumb={breadcrumb}
     >
       {user?.isAdmin ? (
-        <Form
-          form={form}
+        <TitleContentForm
           name="notice"
-          labelAlign="left"
-          labelCol={{ sm: { span: 6 }, md: { span: 4 }, lg: { span: 3 } }}
-          validateTrigger="onBlur"
+          titleLabel="公告标题"
+          contentLabel="公告内容"
+          submitLabel="发布"
+          loading={isLoading}
           onFinish={onFinish}
-        >
-          <Form.Item
-            name="title"
-            label="公告标题"
-            rules={[{ required: true, message: '请输入公告标题' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="content"
-            label="公告内容"
-            rules={[{ required: true, message: '请输入公告内容' }]}
-          >
-            <Editor />
-          </Form.Item>
-          <Form.Item label=" " colon={false}>
-            <Button
-              className={styles.button}
-              htmlType="reset"
-              type="dashed"
-              shape="round"
-              onClick={() => navigate(-1)}
-            >
-              取消
-            </Button>
-            <Button
-              className={styles.button}
-              htmlType="submit"
-              type="primary"
-              shape="round"
-              loading={isLoading}
-            >
-              发布
-            </Button>
-          </Form.Item>
-        </Form>
+          onCancel={() => navigate(-1)}
+        />
       ) : (
         '权限不足'
       )}

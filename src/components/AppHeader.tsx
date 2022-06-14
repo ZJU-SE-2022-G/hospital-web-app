@@ -10,7 +10,7 @@ import {
   Menu,
   Dropdown,
 } from 'antd';
-import { ProfileOutlined } from '@ant-design/icons';
+import { ProfileOutlined, SwapOutlined } from '@ant-design/icons';
 import { useGetCurrentUserQuery } from '../apis/apiSlice';
 import favicon from '../assets/favicon.svg';
 import styles from './AppHeader.module.css';
@@ -30,6 +30,7 @@ const AppHeader: React.FC = () => {
           label: '个人信息',
           icon: <ProfileOutlined />,
         },
+        { key: '/login', label: '切换用户', icon: <SwapOutlined /> },
       ]}
       onClick={e => navigate(e.key)}
     />

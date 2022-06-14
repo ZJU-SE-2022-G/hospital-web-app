@@ -30,15 +30,13 @@ const NoticeListPage: React.FC = () => {
       title="院内公告"
       breadcrumb={breadcrumb}
       extra={
-        user?.isAdmin
-          ? [
-              <Link key="issue" to="/notice">
-                <Button type="primary" icon={<PlusOutlined />}>
-                  发布公告
-                </Button>
-              </Link>,
-            ]
-          : []
+        user?.isAdmin ? (
+          <Link to="/notice">
+            <Button type="primary" icon={<PlusOutlined />}>
+              发布公告
+            </Button>
+          </Link>
+        ) : undefined
       }
     >
       <List

@@ -12,7 +12,7 @@ const unwrap = <T>(response: ApiResponse<T>) => {
 
 const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['User', 'Notice'],
+  tagTypes: ['User', 'Notice', 'Help'],
   endpoints: build => ({
     getCurrentUser: build.query<User, void>({
       query: () => '/users/getInfo',
@@ -49,26 +49,49 @@ const apiSlice = createApi({
       transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
     }),
 
-    createNotice: build.mutation<void, CreateNoticeRequest>({
+    createNotice: build.mutation<Notice, CreateNoticeRequest>({
       query: request => ({
         url: '/notice/create',
         method: 'POST',
         body: request,
       }),
-      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
       invalidatesTags: [{ type: 'Notice', id: 'LIST' }],
+    }),
+
+    listHelps: build.query<Page<Help>, ListHelpsRequest>({
+      query: request => `/guide/page?${stringify(request)}`,
+      transformResponse: (response: ApiResponse<Page<Help>>) => response?.data,
+      providesTags: [{ type: 'Help', id: 'LIST' }],
+    }),
+
+    createHelp: build.mutation<Help, CreateHelpRequest>({
+      query: request => ({
+        url: '/guide/create',
+        method: 'POST',
+        body: request,
+      }),
+      transformResponse: (response: ApiResponse<Help>) => unwrap(response),
+      invalidatesTags: [{ type: 'Help', id: 'LIST' }],
+    }),
+
+    deleteHelp: build.mutation<void, DeleteHelpRequest>({
+      query: request => ({
+        url: `/guide/deleteById?${stringify(request)}`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: [{ type: 'Help', id: 'LIST' }],
     }),
 
     getEpidemicMap: build.query<any, void>({
       query: () => '/epidemic/map',
       transformResponse: (response: any) => ({
         updateTime: response.data.times,
-        provinceData: response.data.list.map(
-          ({ name, econNum: value }: any) => ({
-            name,
-            value,
-          }),
-        ),
+        provinceData: response.data.list.map(({ name, econNum }: any) => ({
+          name,
+          value: econNum,
+        })),
       }),
     }),
 
@@ -135,6 +158,9 @@ export const {
   useListNoticesQuery,
   useGetNoticeQuery,
   useCreateNoticeMutation,
+  useListHelpsQuery,
+  useCreateHelpMutation,
+  useDeleteHelpMutation,
   useGetEpidemicMapQuery,
   useCreateNucleicReservationMutation,
   useCreateVaccineReservationMutation,

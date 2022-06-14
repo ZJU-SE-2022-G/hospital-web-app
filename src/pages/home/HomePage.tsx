@@ -60,8 +60,8 @@ const HomePage: React.FC = () => {
           </div>
         </Col>
       </Row>
-      <Row>
-        <Col className={styles.navigate} span="24">
+      <Row justify="center">
+        <Col className={styles.navigate} xs={24} sm={16}>
           <NavigateButton href="/reserve" label="门诊预约" img={reserveImg} />
           <NavigateButton
             href="/epidemic/nucleic"
@@ -79,6 +79,7 @@ const HomePage: React.FC = () => {
             img={reserveImg}
           />
           <NavigateButton href="/notices" label="院内公告" img={noticeImg} />
+          <NavigateButton href="/help" label="预约指南" img={noticeImg} />
           <NavigateButton href="/doctors" label="医生介绍" img={doctorImg} />
           <NavigateButton
             href="/departments"

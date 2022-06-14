@@ -15,11 +15,13 @@ const DepartmentListPage: React.FC = () => {
     {
       type: 'group',
       label: '科室列表',
-      children: data?.map((item: any) => ({
-        key: item.id,
-        label: item.name,
-        icon: <UsergroupAddOutlined />,
-      })),
+      children: data
+        ? data.map(({ id, name }: any) => ({
+            key: id,
+            label: name,
+            icon: <UsergroupAddOutlined />,
+          }))
+        : [{ label: '加载中', disabled: true }],
     },
   ];
 

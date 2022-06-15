@@ -1,7 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { PageHeader, List, Typography, Tag } from 'antd';
+import { useListFeedbacksQuery } from '../../apis/apiSlice';
+import { useBreadcrumbProps } from '../../utils/breadcrumb';
+import styles from '../../styles/Page.module.css';
+
+const { Text } = Typography;
 
 const FeedbackListPage: React.FC = () => {
-  return <></>;
+  const [current, setCurrent] = useState(1);
+  const { data, isFetching } = useListFeedbacksQuery({
+    p: current,
+    pageSize: 10,
+  });
+  const breadcrumb = useBreadcrumbProps([
+    { path: '/', breadcrumbName: '首页' },
+    { path: '/feedbacks', breadcrumbName: '反馈列表' },
+  ]);
+
+  return (
+    <PageHeader
+      className={styles.largePage}
+      title="反馈列表"
+      breadcrumb={breadcrumb}
+    >
+      <List
+        size="small"
+        dataSource={data?.records}
+        renderItem={feedback => (
+          <List.Item
+            actions={[
+              feedback.problemType,
+              moment(feedback.askTime).format('YYYY-MM-DD'),
+            ]}
+          >
+            <Link to={`/feedbacks/${feedback.id}`}>
+              {feedback.isAnswered ? (
+                <Tag color="green">已回复</Tag>
+              ) : (
+                <Tag color="red">未回复</Tag>
+              )}
+              <Text>{feedback.title}</Text>
+            </Link>
+          </List.Item>
+        )}
+        pagination={{
+          showSizeChanger: false,
+          total: data?.total,
+          onChange: page => setCurrent(page),
+        }}
+        loading={isFetching}
+      />
+    </PageHeader>
+  );
 };
 
 export default FeedbackListPage;

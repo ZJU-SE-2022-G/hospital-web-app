@@ -87,7 +87,19 @@ const apiSlice = createApi({
       query: request => `/problem-feedback/page?${stringify(request)}`,
       transformResponse: (response: ApiResponse<Page<Feedback>>) =>
         response.data,
-      providesTags: [{ type: 'Feedback', id: 'LIST' }],
+      providesTags: (result, error, arg) => [
+        { type: 'Feedback', id: 'LIST' },
+        ...(result?.records || []).map(({ id }) => ({
+          type: 'Feedback' as const,
+          id,
+        })),
+      ],
+    }),
+
+    getFeedback: build.query<Feedback, GetFeedbackRequest>({
+      query: request => `/problem-feedback/getById?${stringify(request)}`,
+      transformResponse: (response: ApiResponse<Feedback>) => response.data,
+      providesTags: (result, error, arg) => [{ type: 'Feedback', id: arg.id }],
     }),
 
     createFeedback: build.mutation<Feedback, CreateFeedbackRequest>({
@@ -98,6 +110,18 @@ const apiSlice = createApi({
       }),
       transformResponse: (response: ApiResponse<Feedback>) => unwrap(response),
       invalidatesTags: [{ type: 'Feedback', id: 'LIST' }],
+    }),
+
+    updateFeedback: build.mutation<Feedback, UpdateFeedbackRequest>({
+      query: request => ({
+        url: '/problem-feedback/answer',
+        method: 'POST',
+        body: request,
+      }),
+      transformResponse: (response: ApiResponse<Feedback>) => unwrap(response),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Feedback', id: arg.id },
+      ],
     }),
 
     getEpidemicMap: build.query<any, void>({
@@ -177,7 +201,10 @@ export const {
   useListHelpsQuery,
   useCreateHelpMutation,
   useDeleteHelpMutation,
+  useListFeedbacksQuery,
+  useGetFeedbackQuery,
   useCreateFeedbackMutation,
+  useUpdateFeedbackMutation,
   useGetEpidemicMapQuery,
   useCreateNucleicReservationMutation,
   useCreateVaccineReservationMutation,

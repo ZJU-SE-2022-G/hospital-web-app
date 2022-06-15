@@ -50,7 +50,8 @@ const HomePage: React.FC = () => {
                 >
                   <Link to={`/notices/${item.id}`}>
                     <Text>
-                      <Tag color="red">NEW</Tag> {item.title}
+                      <Tag color="red">NEW</Tag>
+                      {item.title}
                     </Text>
                   </Link>
                 </List.Item>
@@ -81,6 +82,7 @@ const HomePage: React.FC = () => {
           <NavigateButton href="/notices" label="院内公告" img={noticeImg} />
           <NavigateButton href="/help" label="预约指南" img={noticeImg} />
           <NavigateButton href="/feedback" label="问题反馈" img={noticeImg} />
+          <NavigateButton href="/feedbacks" label="反馈列表" img={noticeImg} />
           <NavigateButton href="/doctors" label="医生介绍" img={doctorImg} />
           <NavigateButton
             href="/departments"

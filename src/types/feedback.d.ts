@@ -18,8 +18,17 @@ declare interface ListFeedbacksRequest {
   pageSize: number;
 }
 
+declare interface GetFeedbackRequest {
+  id: string;
+}
+
 declare interface CreateFeedbackRequest {
   problemType: string;
   title: string;
   problem: string;
+}
+
+declare interface UpdateFeedbackRequest {
+  id: string;
+  answer: string;
 }

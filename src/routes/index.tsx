@@ -11,6 +11,7 @@ import NoticeDetailPage from '../pages/notices/NoticeDetailPage';
 import HelpPage from '../pages/help/HelpPage';
 import FeedbackSendPage from '../pages/feedbacks/FeedbackSendPage';
 import FeedbackListPage from '../pages/feedbacks/FeedbackListPage';
+import FeedbackDetailPage from '../pages/feedbacks/FeedbackDetailPage';
 import MapInfoPage from '../pages/epidemic/MapInfoPage';
 import NucleicPage from '../pages/epidemic/NucleicPage';
 import VaccinePage from '../pages/epidemic/VaccinePage';
@@ -61,7 +62,7 @@ const Routes: React.FC = () =>
           path: 'feedbacks',
           children: [
             { index: true, element: <FeedbackListPage /> },
-            { path: ':feedbackId' },
+            { path: ':feedbackId', element: <FeedbackDetailPage /> },
           ],
         },
         {

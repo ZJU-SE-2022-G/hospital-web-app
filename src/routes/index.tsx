@@ -8,6 +8,7 @@ import UserInfoPage from '../pages/user/UserInfoPage';
 import NoticeIssuePage from '../pages/notices/NoticeIssuePage';
 import NoticeListPage from '../pages/notices/NoticeListPage';
 import NoticeDetailPage from '../pages/notices/NoticeDetailPage';
+import NoticeUpdatePage from '../pages/notices/NoticeUpdatePage';
 import HelpPage from '../pages/help/HelpPage';
 import FeedbackSendPage from '../pages/feedbacks/FeedbackSendPage';
 import FeedbackListPage from '../pages/feedbacks/FeedbackListPage';
@@ -54,6 +55,10 @@ const Routes: React.FC = () =>
           children: [
             { index: true, element: <NoticeListPage /> },
             { path: ':noticeId', element: <NoticeDetailPage /> },
+            {
+              path: 'edit',
+              children: [{ path: ':noticeId', element: <NoticeUpdatePage /> }],
+            },
           ],
         },
         { path: 'help', element: <HelpPage /> },

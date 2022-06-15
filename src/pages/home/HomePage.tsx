@@ -14,7 +14,11 @@ import styles from './HomePage.module.css';
 const { Title, Text } = Typography;
 
 const HomePage: React.FC = () => {
-  const { data, isFetching } = useListNoticesQuery({ p: 1, pageSize: 2 });
+  const { data, isFetching } = useListNoticesQuery({
+    p: 1,
+    pageSize: 2,
+    query: '',
+  });
 
   const imgs = [carousel1Img, carousel1Img];
 
@@ -46,7 +50,7 @@ const HomePage: React.FC = () => {
               renderItem={item => (
                 <List.Item
                   className={styles.noticeItem}
-                  actions={[moment(item.releaseTime).format('YYYY-MM-DD')]}
+                  actions={[moment(item.updateTime).format('YYYY-MM-DD')]}
                 >
                   <Link to={`/notices/${item.id}`}>
                     <Text>

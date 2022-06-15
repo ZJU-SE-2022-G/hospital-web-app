@@ -12,6 +12,7 @@ declare interface Notice {
 declare interface ListNoticesRequest {
   p: number;
   pageSize: number;
+  query: string;
 }
 
 declare interface GetNoticeRequest {
@@ -21,4 +22,14 @@ declare interface GetNoticeRequest {
 declare interface CreateNoticeRequest {
   title: string;
   content: string;
+}
+
+declare interface UpdateNoticeRequest {
+  id: string;
+  title: string;
+  content: string;
+}
+
+declare interface DeleteNoticeRequest {
+  id: string;
 }

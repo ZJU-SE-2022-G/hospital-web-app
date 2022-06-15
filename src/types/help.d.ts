@@ -12,6 +12,7 @@ declare interface Help {
 declare interface ListHelpsRequest {
   p: number;
   pageSize: number;
+  query: string;
 }
 
 declare interface CreateHelpRequest {

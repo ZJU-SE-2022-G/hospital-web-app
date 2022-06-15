@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
-  Modal,
   PageHeader,
   Input,
   Button,
   Skeleton,
   Collapse,
   Typography,
+  Modal,
   message,
 } from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';

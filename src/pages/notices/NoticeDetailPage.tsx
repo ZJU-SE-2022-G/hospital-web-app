@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
-import { Modal, PageHeader, Typography, Button, Skeleton, message } from 'antd';
+import { PageHeader, Typography, Button, Skeleton, Modal, message } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import Viewer from '../../components/Viewer';
 import {

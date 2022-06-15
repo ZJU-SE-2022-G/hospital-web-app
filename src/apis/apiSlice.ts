@@ -20,6 +20,12 @@ const apiSlice = createApi({
       providesTags: ['User'],
     }),
 
+    getCurrentUserReserve: build.query<Reserve, any>({
+      query: uid => `/record/${uid}`,
+      transformResponse: (response: ApiResponse<Reserve>) => response.data,
+      providesTags: ['User'],
+    }),
+
     createUser: build.mutation<void, CreateUserRequest>({
       query: request => ({
         url: `/users/reg?${stringify(request)}`,
@@ -228,6 +234,7 @@ export { apiSlice };
 
 export const {
   useGetCurrentUserQuery,
+  useGetCurrentUserReserveQuery,
   useCreateUserMutation,
   useCreateSessionMutation,
   useDeleteSessionMutation,

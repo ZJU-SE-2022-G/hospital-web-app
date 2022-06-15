@@ -37,6 +37,12 @@ const apiSlice = createApi({
       invalidatesTags: ['User'],
     }),
 
+    deleteSession: build.mutation<void, void>({
+      query: () => '/users/logout',
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['User'],
+    }),
+
     listNotices: build.query<Page<Notice>, ListNoticesRequest>({
       query: request => `/notice/page?${stringify(request)}`,
       transformResponse: (response: ApiResponse<Page<Notice>>) => response.data,
@@ -81,7 +87,10 @@ const apiSlice = createApi({
         method: 'DELETE',
       }),
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
-      invalidatesTags: [{ type: 'Notice', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Notice', id: 'LIST' },
+        { type: 'Notice', id: arg.id },
+      ],
     }),
 
     listHelps: build.query<Page<Help>, ListHelpsRequest>({
@@ -221,6 +230,7 @@ export const {
   useGetCurrentUserQuery,
   useCreateUserMutation,
   useCreateSessionMutation,
+  useDeleteSessionMutation,
   useListNoticesQuery,
   useGetNoticeQuery,
   useCreateNoticeMutation,

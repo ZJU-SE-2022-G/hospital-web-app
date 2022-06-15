@@ -9,9 +9,13 @@ import {
   Button,
   Menu,
   Dropdown,
+  message,
 } from 'antd';
-import { ProfileOutlined, SwapOutlined } from '@ant-design/icons';
-import { useGetCurrentUserQuery } from '../apis/apiSlice';
+import { ProfileOutlined, LogoutOutlined } from '@ant-design/icons';
+import {
+  useGetCurrentUserQuery,
+  useDeleteSessionMutation,
+} from '../apis/apiSlice';
 import favicon from '../assets/favicon.svg';
 import styles from './AppHeader.module.css';
 
@@ -21,18 +25,31 @@ const { Title, Text } = Typography;
 const AppHeader: React.FC = () => {
   const navigate = useNavigate();
   const { data: user } = useGetCurrentUserQuery();
+  const [logout] = useDeleteSessionMutation();
 
   const menu = (
     <Menu
       items={[
         {
-          key: '/user',
+          key: 'info',
           label: '个人信息',
           icon: <ProfileOutlined />,
+          onClick: () => navigate('/user'),
         },
-        { key: '/login', label: '切换用户', icon: <SwapOutlined /> },
+        {
+          key: 'logout',
+          label: '退出登录',
+          icon: <LogoutOutlined />,
+          onClick: async () => {
+            try {
+              await logout().unwrap();
+              message.success('退出成功');
+            } catch (err: any) {
+              message.error(err.message || err.status);
+            }
+          },
+        },
       ]}
-      onClick={e => navigate(e.key)}
     />
   );
 

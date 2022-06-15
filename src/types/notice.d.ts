@@ -29,3 +29,7 @@ declare interface UpdateNoticeRequest {
   title: string;
   content: string;
 }
+
+declare interface DeleteNoticeRequest {
+  id: string;
+}

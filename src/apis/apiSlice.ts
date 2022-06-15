@@ -75,6 +75,15 @@ const apiSlice = createApi({
       invalidatesTags: (result, error, arg) => [{ type: 'Notice', id: arg.id }],
     }),
 
+    deleteNotice: build.mutation<void, DeleteNoticeRequest>({
+      query: request => ({
+        url: `/notice/deleteById?${stringify(request)}`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: [{ type: 'Notice', id: 'LIST' }],
+    }),
+
     listHelps: build.query<Page<Help>, ListHelpsRequest>({
       query: request => `/guide/page?${stringify(request)}`,
       transformResponse: (response: ApiResponse<Page<Help>>) => response.data,
@@ -216,6 +225,7 @@ export const {
   useGetNoticeQuery,
   useCreateNoticeMutation,
   useUpdateNoticeMutation,
+  useDeleteNoticeMutation,
   useListHelpsQuery,
   useCreateHelpMutation,
   useDeleteHelpMutation,

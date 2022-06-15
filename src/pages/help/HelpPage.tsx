@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Modal,
   PageHeader,
+  Input,
   Button,
   Skeleton,
   Collapse,
@@ -21,13 +22,19 @@ import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
 
 const { confirm } = Modal;
+const { Search } = Input;
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const HelpPage: React.FC = () => {
+  const [search, setSearch] = useState('');
   const [formVisible, setFormVisible] = useState(false);
   const { data: user } = useGetCurrentUserQuery();
-  const { data, isFetching } = useListHelpsQuery({ p: 1, pageSize: 100 });
+  const { data, isFetching } = useListHelpsQuery({
+    p: 1,
+    pageSize: 100,
+    query: search,
+  });
   const [create, { isLoading }] = useCreateHelpMutation();
   const [remove] = useDeleteHelpMutation();
   const breadcrumb = useBreadcrumbProps([
@@ -66,17 +73,24 @@ const HelpPage: React.FC = () => {
       className={styles.largePage}
       title="预约指南"
       breadcrumb={breadcrumb}
-      extra={
+      extra={[
+        <Search
+          key="search"
+          allowClear
+          loading={isFetching}
+          onSearch={value => setSearch(value)}
+        />,
         user?.isAdmin && !formVisible ? (
           <Button
+            key="create"
             type="primary"
             icon={<PlusOutlined />}
             onClick={() => setFormVisible(true)}
           >
             创建问答
           </Button>
-        ) : undefined
-      }
+        ) : undefined,
+      ]}
     >
       {formVisible && (
         <TitleContentForm

@@ -40,12 +40,19 @@ const apiSlice = createApi({
     listNotices: build.query<Page<Notice>, ListNoticesRequest>({
       query: request => `/notice/page?${stringify(request)}`,
       transformResponse: (response: ApiResponse<Page<Notice>>) => response.data,
-      providesTags: [{ type: 'Notice', id: 'LIST' }],
+      providesTags: (result, error, arg) => [
+        { type: 'Notice', id: 'LIST' },
+        ...(result?.records || []).map(({ id }) => ({
+          type: 'Notice' as const,
+          id,
+        })),
+      ],
     }),
 
     getNotice: build.query<Notice, GetNoticeRequest>({
       query: request => `/notice/getById?${stringify(request)}`,
       transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
+      providesTags: (result, error, arg) => [{ type: 'Notice', id: arg.id }],
     }),
 
     createNotice: build.mutation<Notice, CreateNoticeRequest>({
@@ -56,6 +63,16 @@ const apiSlice = createApi({
       }),
       transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
       invalidatesTags: [{ type: 'Notice', id: 'LIST' }],
+    }),
+
+    updateNotice: build.mutation<Notice, UpdateNoticeRequest>({
+      query: request => ({
+        url: '/notice/update',
+        method: 'POST',
+        body: request,
+      }),
+      transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
+      invalidatesTags: (result, error, arg) => [{ type: 'Notice', id: arg.id }],
     }),
 
     listHelps: build.query<Page<Help>, ListHelpsRequest>({
@@ -198,6 +215,7 @@ export const {
   useListNoticesQuery,
   useGetNoticeQuery,
   useCreateNoticeMutation,
+  useUpdateNoticeMutation,
   useListHelpsQuery,
   useCreateHelpMutation,
   useDeleteHelpMutation,

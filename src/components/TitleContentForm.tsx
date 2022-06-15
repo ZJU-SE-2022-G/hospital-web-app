@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import Editor from './Editor';
 import styles from '../styles/Page.module.css';
@@ -7,7 +7,9 @@ interface TitleContentFormProps {
   name: string;
   extra?: React.ReactNode;
   titleLabel: string;
+  titleDefaultValue?: string;
   contentLabel: string;
+  contentDefaultValue?: string;
   submitLabel: string;
   loading: boolean;
   onFinish: (values: any) => void;
@@ -18,13 +20,24 @@ const TitleContentForm: React.FC<TitleContentFormProps> = ({
   name,
   extra,
   titleLabel,
+  titleDefaultValue,
   contentLabel,
+  contentDefaultValue,
   submitLabel,
   loading,
   onFinish,
   onCancel,
 }) => {
   const [form] = Form.useForm();
+
+  useEffect(
+    () =>
+      form.setFieldsValue({
+        title: titleDefaultValue,
+        content: contentDefaultValue,
+      }),
+    [],
+  );
 
   return (
     <Form
@@ -48,7 +61,7 @@ const TitleContentForm: React.FC<TitleContentFormProps> = ({
         label={contentLabel}
         rules={[{ required: true, message: `请输入${contentLabel}` }]}
       >
-        <Editor />
+        <Editor initialValue={contentDefaultValue} />
       </Form.Item>
       <Form.Item label=" " colon={false}>
         <Button

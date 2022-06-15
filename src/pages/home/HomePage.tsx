@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { Row, Col, Carousel, List, Typography, Tag, Space } from 'antd';
+import { Row, Col, Carousel, List, Typography, Tag } from 'antd';
 import { useListNoticesQuery } from '../../apis/apiSlice';
 import NavigateButton from '../../components/NavigateButton';
 import carousel1Img from '../../assets/home/carousel1.png';
@@ -50,7 +50,8 @@ const HomePage: React.FC = () => {
                 >
                   <Link to={`/notices/${item.id}`}>
                     <Text>
-                      <Tag color="red">NEW</Tag> {item.title}
+                      <Tag color="red">NEW</Tag>
+                      {item.title}
                     </Text>
                   </Link>
                 </List.Item>
@@ -80,6 +81,8 @@ const HomePage: React.FC = () => {
           />
           <NavigateButton href="/notices" label="院内公告" img={noticeImg} />
           <NavigateButton href="/help" label="预约指南" img={noticeImg} />
+          <NavigateButton href="/feedback" label="问题反馈" img={noticeImg} />
+          <NavigateButton href="/feedbacks" label="反馈列表" img={noticeImg} />
           <NavigateButton href="/doctors" label="医生介绍" img={doctorImg} />
           <NavigateButton
             href="/departments"

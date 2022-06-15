@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { PageHeader, Button, Collapse, Modal, message, Skeleton } from 'antd';
+import {
+  Modal,
+  PageHeader,
+  Button,
+  Skeleton,
+  Collapse,
+  Typography,
+  message,
+} from 'antd';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import TitleContentForm from '../../components/TitleContentForm';
 import Viewer from '../../components/Viewer';
@@ -12,8 +20,9 @@ import {
 import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
 
-const { Panel } = Collapse;
 const { confirm } = Modal;
+const { Panel } = Collapse;
+const { Text } = Typography;
 
 const HelpPage: React.FC = () => {
   const [formVisible, setFormVisible] = useState(false);
@@ -86,7 +95,12 @@ const HelpPage: React.FC = () => {
             {data.records.map(({ id, title, content }) => (
               <Panel
                 key={id}
-                header={`问：${title}`}
+                header={
+                  <>
+                    <Text strong>问：</Text>
+                    {title}
+                  </>
+                }
                 extra={
                   user?.isAdmin ? (
                     <Button
@@ -102,7 +116,7 @@ const HelpPage: React.FC = () => {
                   ) : undefined
                 }
               >
-                答：
+                <Text strong>答：</Text>
                 <Viewer initialValue={content} />
               </Panel>
             ))}

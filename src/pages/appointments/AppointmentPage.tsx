@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
 import {
   PageHeader,
   Form,
@@ -15,6 +15,7 @@ import {
 import {
   useGetCurrentUserQuery,
   useCreateAppointmentMutation,
+  useListDoctorWorkdaysQuery,
   useListDepartmentsQuery,
   useListDoctorsQuery,
 } from '../../apis/apiSlice';
@@ -22,10 +23,12 @@ import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
 
 const AppointmentPage: React.FC = () => {
+  const [doctorId, setDoctorId] = useState('');
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { data: user } = useGetCurrentUserQuery();
   const [reserve, { isLoading }] = useCreateAppointmentMutation();
+  const { data: workdays } = useListDoctorWorkdaysQuery(doctorId || skipToken);
   const { data: departments } = useListDepartmentsQuery();
   const { data: doctors } = useListDoctorsQuery();
   const breadcrumb = useBreadcrumbProps([
@@ -56,7 +59,7 @@ const AppointmentPage: React.FC = () => {
           pwd: values['id'],
           departmentName: values['doctor'][0],
           docName: values['doctor'][1],
-          orderedTime: values['date'].format('MMDD'),
+          orderedTime: values['date'].format('YYYY-MM-DD'),
         }).unwrap();
         navigate('/user');
         message.success('预约成功');
@@ -124,7 +127,16 @@ const AppointmentPage: React.FC = () => {
             label="预约医生"
             rules={[{ required: true, message: '请选择预约医生' }]}
           >
-            <Cascader options={options} />
+            <Cascader
+              options={options}
+              onChange={value => {
+                form.resetFields(['date']);
+                setDoctorId(
+                  doctors?.find(doctor => doctor.docName === value[1])?.docId ||
+                    '',
+                );
+              }}
+            />
           </Form.Item>
           <Form.Item
             name="date"
@@ -133,9 +145,9 @@ const AppointmentPage: React.FC = () => {
           >
             <DatePicker
               disabledDate={current =>
-                current &&
-                (current < moment().endOf('day') ||
-                  current > moment().add(7, 'days').endOf('day'))
+                !workdays?.find(
+                  workday => workday.workTime === current.format('YYYY-MM-DD'),
+                )
               }
             />
           </Form.Item>

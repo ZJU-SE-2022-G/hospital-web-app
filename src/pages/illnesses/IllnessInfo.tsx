@@ -6,7 +6,7 @@ import { useGetIllnessQuery } from '../../apis/apiSlice';
 const { Title, Paragraph } = Typography;
 
 const IllnessInfo: React.FC = () => {
-  const { illnessId } = useParams();
+  const { illnessId = '' } = useParams();
   const { data, isFetching } = useGetIllnessQuery(illnessId);
 
   const title = data?.[0]?.name;

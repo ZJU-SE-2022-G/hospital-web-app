@@ -12,17 +12,11 @@ const unwrap = <T>(response: ApiResponse<T>) => {
 
 const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['User', 'Notice', 'Help', 'Feedback'],
+  tagTypes: ['User', 'Reservation', 'Notice', 'Help', 'Feedback'],
   endpoints: build => ({
     getCurrentUser: build.query<User, void>({
       query: () => '/users/getInfo',
       transformResponse: (response: ApiResponse<User>) => response.data,
-      providesTags: ['User'],
-    }),
-
-    getCurrentUserReserve: build.query<Reserve, any>({
-      query: uid => `/record/${uid}`,
-      transformResponse: (response: ApiResponse<Reserve>) => response.data,
       providesTags: ['User'],
     }),
 
@@ -49,6 +43,12 @@ const apiSlice = createApi({
       invalidatesTags: ['User'],
     }),
 
+    getUserReservation: build.query<Reservation, number>({
+      query: uid => `/record/${uid}`,
+      transformResponse: (response: ApiResponse<Reservation>) => response.data,
+      providesTags: ['Reservation'],
+    }),
+
     listNotices: build.query<Page<Notice>, ListNoticesRequest>({
       query: request => `/notice/page?${stringify(request)}`,
       transformResponse: (response: ApiResponse<Page<Notice>>) => response.data,
@@ -63,7 +63,7 @@ const apiSlice = createApi({
 
     getNotice: build.query<Notice, GetNoticeRequest>({
       query: request => `/notice/getById?${stringify(request)}`,
-      transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
+      transformResponse: (response: ApiResponse<Notice>) => response.data,
       providesTags: (result, error, arg) => [{ type: 'Notice', id: arg.id }],
     }),
 
@@ -200,32 +200,32 @@ const apiSlice = createApi({
 
     listDepartments: build.query<any, void>({
       query: () => '/departmentIntro/fetch-all',
-      transformResponse: (response: any) => unwrap(response),
+      transformResponse: (response: any) => response.data,
     }),
 
-    getDepartment: build.query<any, any>({
+    getDepartment: build.query<any, string>({
       query: id => `/departmentIntro/${id}`,
-      transformResponse: (response: any) => unwrap(response),
+      transformResponse: (response: any) => response.data,
     }),
 
     listDoctors: build.query<any, void>({
       query: () => '/doctorIntro/fetch-all',
-      transformResponse: (response: any) => unwrap(response),
+      transformResponse: (response: any) => response.data,
     }),
 
-    getDoctor: build.query<any, any>({
+    getDoctor: build.query<any, string>({
       query: id => `/doctorIntro/${id}`,
-      transformResponse: (response: any) => unwrap(response),
+      transformResponse: (response: any) => response.data,
     }),
 
     listIllnesses: build.query<any, void>({
       query: () => '/illnessIntro/fetch-all',
-      transformResponse: (response: any) => unwrap(response),
+      transformResponse: (response: any) => response.data,
     }),
 
-    getIllness: build.query<any, any>({
+    getIllness: build.query<any, string>({
       query: id => `/illnessIntro/${id}`,
-      transformResponse: (response: any) => unwrap(response),
+      transformResponse: (response: any) => response.data,
     }),
   }),
 });
@@ -234,10 +234,10 @@ export { apiSlice };
 
 export const {
   useGetCurrentUserQuery,
-  useGetCurrentUserReserveQuery,
   useCreateUserMutation,
   useCreateSessionMutation,
   useDeleteSessionMutation,
+  useGetUserReservationQuery,
   useListNoticesQuery,
   useGetNoticeQuery,
   useCreateNoticeMutation,

@@ -6,7 +6,7 @@ import { useGetDepartmentQuery } from '../../apis/apiSlice';
 const { Title, Paragraph } = Typography;
 
 const DepartmentInfo: React.FC = () => {
-  const { departmentId } = useParams();
+  const { departmentId = '' } = useParams();
   const { data, isFetching } = useGetDepartmentQuery(departmentId);
 
   const title = data?.[0]?.name;

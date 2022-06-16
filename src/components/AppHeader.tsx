@@ -65,7 +65,7 @@ const AppHeader: React.FC = () => {
                   医院网上预约系统
                 </Title>
                 <Text className={styles.subTitle} italic>
-                  Hospital Reservation System
+                  Hospital Appointment System
                 </Text>
               </div>
             </Space>

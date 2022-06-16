@@ -7,6 +7,10 @@ import china from '../../libs/china.json';
 const MapInfoPage: React.FC = () => {
   const { data, isFetching } = useGetEpidemicMapQuery();
 
+  useEffect(() => {
+    echarts.registerMap('china', china as any);
+  }, []);
+
   const option = data
     ? {
         title: {
@@ -79,10 +83,6 @@ const MapInfoPage: React.FC = () => {
           top: 50,
         },
       };
-
-  useEffect(() => {
-    echarts.registerMap('china', china as any);
-  }, []);
 
   return (
     <EChartsReact style={{ width: '100%', height: '100%' }} option={option} />

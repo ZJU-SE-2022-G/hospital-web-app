@@ -1,16 +1,16 @@
 import React from 'react';
-import { PageHeader, Spin, Descriptions, List } from 'antd';
+import { PageHeader, Spin, Descriptions, List, Space } from 'antd';
 import {
   useGetCurrentUserQuery,
-  useGetUserReservationQuery,
+  useListAppointmentsQuery,
 } from '../../apis/apiSlice';
 import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
 
 const UserInfoPage: React.FC = () => {
   const { data: user, isFetching: userFetching } = useGetCurrentUserQuery();
-  const { data: reservation, isFetching: reservationFetching } =
-    useGetUserReservationQuery();
+  const { data: appointments, isFetching: appointmentsFetching } =
+    useListAppointmentsQuery();
   const breadcrumb = useBreadcrumbProps([
     { path: '/', breadcrumbName: '首页' },
     { path: '/user', breadcrumbName: '个人信息' },
@@ -22,24 +22,27 @@ const UserInfoPage: React.FC = () => {
       title="个人信息"
       breadcrumb={breadcrumb}
     >
-      <Spin spinning={userFetching || reservationFetching}>
+      <Spin spinning={userFetching || appointmentsFetching}>
         <Descriptions contentStyle={{ background: '#ffffff' }} bordered>
           <Descriptions.Item label="用户 ID">{user?.uid}</Descriptions.Item>
-          <Descriptions.Item label="真实姓名">{user?.name}</Descriptions.Item>
+          <Descriptions.Item label="姓名">{user?.name}</Descriptions.Item>
           <Descriptions.Item label="手机号">{user?.phone}</Descriptions.Item>
           <Descriptions.Item label="身份证号">{user?.id}</Descriptions.Item>
           <Descriptions.Item label="已预约就诊信息">
             <List
-              dataSource={reservation?.map((item: any) =>
-                item.uid == user?.uid
-                  ? `操作时间：${
-                      item.orderData.substring(0, 10) +
-                      ' ' +
-                      item.orderData.substring(11, 16)
-                    } 预约日期：
-                    ${item.visitData}`
-                  : '',
-              )}
+              dataSource={appointments
+                ?.filter(appointment => appointment.uid === user?.uid)
+                .map(appointment => (
+                  <Space>
+                    <span>
+                      操作时间：
+                      {appointment.orderData.substring(0, 10) +
+                        ' ' +
+                        appointment.orderData.substring(11, 16)}
+                    </span>
+                    /<span>预约日期：{appointment.visitData}</span>
+                  </Space>
+                ))}
               renderItem={item => <List.Item>{item}</List.Item>}
             />
           </Descriptions.Item>

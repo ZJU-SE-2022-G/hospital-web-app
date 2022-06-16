@@ -14,11 +14,12 @@ const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   tagTypes: [
     'User',
-    'Reservation',
+    'Appointment',
+    'Nucleic',
+    'Vaccine',
     'Notice',
     'Help',
     'Feedback',
-    'Appointment',
   ],
   endpoints: build => ({
     getCurrentUser: build.query<User, void>({
@@ -50,11 +51,20 @@ const apiSlice = createApi({
       invalidatesTags: ['User'],
     }),
 
-    getUserReservation: build.query<Reservation[], void>({
+    listAppointments: build.query<Appointment[], void>({
       query: () => '/record/fetch-all',
-      transformResponse: (response: ApiResponse<Reservation[]>) =>
+      transformResponse: (response: ApiResponse<Appointment[]>) =>
         response.data,
-      providesTags: ['Reservation'],
+      providesTags: ['Appointment'],
+    }),
+
+    createAppointment: build.mutation<void, CreateAppointmentRequest>({
+      query: request => ({
+        url: `/record/insert?${stringify(request)}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['Appointment'],
     }),
 
     listNotices: build.query<Page<Notice>, ListNoticesRequest>({
@@ -110,7 +120,7 @@ const apiSlice = createApi({
     listHelps: build.query<Page<Help>, ListHelpsRequest>({
       query: request => `/guide/page?${stringify(request)}`,
       transformResponse: (response: ApiResponse<Page<Help>>) => response.data,
-      providesTags: [{ type: 'Help', id: 'LIST' }],
+      providesTags: ['Help'],
     }),
 
     createHelp: build.mutation<Help, CreateHelpRequest>({
@@ -120,7 +130,7 @@ const apiSlice = createApi({
         body: request,
       }),
       transformResponse: (response: ApiResponse<Help>) => unwrap(response),
-      invalidatesTags: [{ type: 'Help', id: 'LIST' }],
+      invalidatesTags: ['Help'],
     }),
 
     deleteHelp: build.mutation<void, DeleteHelpRequest>({
@@ -129,7 +139,7 @@ const apiSlice = createApi({
         method: 'DELETE',
       }),
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
-      invalidatesTags: [{ type: 'Help', id: 'LIST' }],
+      invalidatesTags: ['Help'],
     }),
 
     listFeedbacks: build.query<Page<Feedback>, ListFeedbacksRequest>({
@@ -184,6 +194,13 @@ const apiSlice = createApi({
       }),
     }),
 
+    getNucleicReservation: build.query<NucleicReservation, string>({
+      query: id => `/nucTestApp/query/${id}`,
+      transformResponse: (response: ApiResponse<NucleicReservation>) =>
+        response.data,
+      providesTags: ['Nucleic'],
+    }),
+
     createNucleicReservation: build.mutation<
       void,
       CreateNucleicReservationRequest
@@ -193,6 +210,20 @@ const apiSlice = createApi({
         method: 'POST',
       }),
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['Nucleic'],
+    }),
+
+    deleteNucleicReservation: build.mutation<void, string>({
+      query: id => `/nucTestApp/delete/${id}`,
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['Nucleic'],
+    }),
+
+    getVaccineReservation: build.query<VaccineReservation, string>({
+      query: id => `/vacApp/query/${id}`,
+      transformResponse: (response: ApiResponse<VaccineReservation>) =>
+        response.data,
+      providesTags: ['Vaccine'],
     }),
 
     createVaccineReservation: build.mutation<
@@ -204,45 +235,43 @@ const apiSlice = createApi({
         method: 'POST',
       }),
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['Vaccine'],
     }),
 
-    listDepartments: build.query<any, void>({
-      query: () => '/departmentIntro/fetch-all',
-      transformResponse: (response: any) => response.data,
-    }),
-
-    getDepartment: build.query<any, string>({
-      query: id => `/departmentIntro/${id}`,
-      transformResponse: (response: any) => response.data,
-    }),
-
-    listDoctors: build.query<any, void>({
-      query: () => '/doctorIntro/fetch-all',
-      transformResponse: (response: any) => response.data,
-    }),
-
-    getDoctor: build.query<any, string>({
-      query: id => `/doctorIntro/${id}`,
-      transformResponse: (response: any) => response.data,
-    }),
-
-    listIllnesses: build.query<any, void>({
-      query: () => '/illnessIntro/fetch-all',
-      transformResponse: (response: any) => response.data,
-    }),
-
-    getIllness: build.query<any, string>({
-      query: id => `/illnessIntro/${id}`,
-      transformResponse: (response: any) => response.data,
-    }),
-
-    createDoctorReservation: build.mutation<void, CreateDoctorRequest>({
-      query: request => ({
-        url: `/record/insert?${stringify(request)}`,
-        method: 'POST',
-      }),
+    deleteVaccineReservation: build.mutation<void, string>({
+      query: id => `/vacApp/delete/${id}`,
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
-      invalidatesTags: [{ type: 'Appointment', id: 'LIST' }],
+      invalidatesTags: ['Vaccine'],
+    }),
+
+    listDepartments: build.query<Department[], void>({
+      query: () => '/departmentIntro/fetch-all',
+      transformResponse: (response: ApiResponse<Department[]>) => response.data,
+    }),
+
+    getDepartment: build.query<Department[], string>({
+      query: id => `/departmentIntro/${id}`,
+      transformResponse: (response: ApiResponse<Department[]>) => response.data,
+    }),
+
+    listDoctors: build.query<Doctor[], void>({
+      query: () => '/doctorIntro/fetch-all',
+      transformResponse: (response: ApiResponse<Doctor[]>) => response.data,
+    }),
+
+    getDoctor: build.query<Doctor[], string>({
+      query: id => `/doctorIntro/${id}`,
+      transformResponse: (response: ApiResponse<Doctor[]>) => response.data,
+    }),
+
+    listIllnesses: build.query<Illness[], void>({
+      query: () => '/illnessIntro/fetch-all',
+      transformResponse: (response: ApiResponse<Illness[]>) => response.data,
+    }),
+
+    getIllness: build.query<Illness[], string>({
+      query: id => `/illnessIntro/${id}`,
+      transformResponse: (response: ApiResponse<Illness[]>) => response.data,
     }),
   }),
 });
@@ -254,7 +283,8 @@ export const {
   useCreateUserMutation,
   useCreateSessionMutation,
   useDeleteSessionMutation,
-  useGetUserReservationQuery,
+  useListAppointmentsQuery,
+  useCreateAppointmentMutation,
   useListNoticesQuery,
   useGetNoticeQuery,
   useCreateNoticeMutation,
@@ -268,13 +298,16 @@ export const {
   useCreateFeedbackMutation,
   useUpdateFeedbackMutation,
   useGetEpidemicMapQuery,
+  useGetNucleicReservationQuery,
   useCreateNucleicReservationMutation,
+  useDeleteNucleicReservationMutation,
+  useGetVaccineReservationQuery,
   useCreateVaccineReservationMutation,
+  useDeleteVaccineReservationMutation,
   useListDepartmentsQuery,
   useGetDepartmentQuery,
   useListDoctorsQuery,
   useGetDoctorQuery,
   useListIllnessesQuery,
   useGetIllnessQuery,
-  useCreateDoctorReservationMutation,
 } = apiSlice;

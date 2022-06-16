@@ -16,12 +16,12 @@ const IllnessListPage: React.FC = () => {
       type: 'group',
       label: '病情列表',
       children: data
-        ? data.map(({ id, name }: any) => ({
+        ? data.map(({ id, name }) => ({
             key: id,
             label: name,
             icon: <AlertOutlined />,
           }))
-        : [{ label: '加载中', disabled: true }],
+        : [{ key: 'loading', label: '加载中', disabled: true }],
     },
   ];
 

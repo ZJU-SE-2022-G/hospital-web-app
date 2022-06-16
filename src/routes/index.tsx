@@ -5,6 +5,7 @@ import HomePage from '../pages/home/HomePage';
 import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
 import UserInfoPage from '../pages/user/UserInfoPage';
+import AppointmentPage from '../pages/appointments/AppointmentPage';
 import NoticeIssuePage from '../pages/notices/NoticeIssuePage';
 import NoticeListPage from '../pages/notices/NoticeListPage';
 import NoticeDetailPage from '../pages/notices/NoticeDetailPage';
@@ -22,7 +23,6 @@ import DoctorListPage from '../pages/doctors/DoctorListPage';
 import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
-import AppointmentPage from '../pages/appointment/AppointmentPage';
 
 const Routes: React.FC = () =>
   useRoutes([

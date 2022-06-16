@@ -5,6 +5,7 @@ import HomePage from '../pages/home/HomePage';
 import RegisterPage from '../pages/register/RegisterPage';
 import LoginPage from '../pages/login/LoginPage';
 import UserInfoPage from '../pages/user/UserInfoPage';
+import AppointmentPage from '../pages/appointments/AppointmentPage';
 import NoticeIssuePage from '../pages/notices/NoticeIssuePage';
 import NoticeListPage from '../pages/notices/NoticeListPage';
 import NoticeDetailPage from '../pages/notices/NoticeDetailPage';
@@ -44,7 +45,7 @@ const Routes: React.FC = () =>
         },
         { path: 'manage' },
         { path: 'search' },
-        { path: 'reserve' },
+        { path: 'reserve', element: <AppointmentPage /> },
         {
           path: 'reserves',
           children: [{ index: true }, { path: ':reserveId' }],

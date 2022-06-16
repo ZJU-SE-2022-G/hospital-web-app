@@ -6,7 +6,7 @@ import { useGetDoctorQuery } from '../../apis/apiSlice';
 const { Title } = Typography;
 
 const DoctorInfo: React.FC = () => {
-  const { doctorId } = useParams();
+  const { doctorId = '' } = useParams();
   const { data, isFetching } = useGetDoctorQuery(doctorId);
 
   const age = data?.[0]?.age;

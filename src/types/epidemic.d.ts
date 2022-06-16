@@ -2,7 +2,7 @@ declare interface NucleicReservation {
   usrId: string;
   usrName: string;
   testType: string;
-  testDate: [number, number, number];
+  testDate: number[];
 }
 
 declare interface CreateNucleicReservationRequest {
@@ -18,7 +18,7 @@ declare interface VaccineReservation {
   age: number;
   sex: string;
   vacNum: number;
-  vacDate: [number, number, number];
+  vacDate: number[];
 }
 
 declare interface CreateVaccineReservationRequest {

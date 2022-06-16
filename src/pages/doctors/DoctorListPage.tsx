@@ -16,12 +16,12 @@ const DoctorListPage: React.FC = () => {
       type: 'group',
       label: '医生列表',
       children: data
-        ? data.map(({ docId, docName }: any) => ({
+        ? data.map(({ docId, docName }) => ({
             key: docId,
             label: docName,
             icon: <UserOutlined />,
           }))
-        : [{ label: '加载中', disabled: true }],
+        : [{ key: 'loading', label: '加载中', disabled: true }],
     },
   ];
 

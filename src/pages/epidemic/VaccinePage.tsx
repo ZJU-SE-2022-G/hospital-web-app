@@ -39,6 +39,10 @@ const VaccinePage: React.FC = () => {
     { path: '/epidemic/vaccine', breadcrumbName: '疫苗预约' },
   ]);
 
+  useEffect(() => {
+    form.setFieldsValue({ name: user?.name, id: user?.id });
+  }, [user]);
+
   const onFinish = async (values: any) => {
     try {
       console.log(values);
@@ -59,7 +63,7 @@ const VaccinePage: React.FC = () => {
 
   const onDelete = async () => {
     try {
-      if (user?.id) {
+      if (user) {
         await remove(user.id).unwrap();
         setInfoVisible(false);
         message.success('取消成功');
@@ -68,10 +72,6 @@ const VaccinePage: React.FC = () => {
       message.error(err.message || err.status);
     }
   };
-
-  useEffect(() => {
-    form.setFieldsValue({ name: user?.name, id: user?.id });
-  }, [user]);
 
   return (
     <>

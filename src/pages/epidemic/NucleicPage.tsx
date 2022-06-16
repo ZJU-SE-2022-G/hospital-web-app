@@ -38,6 +38,10 @@ const NucleicPage: React.FC = () => {
     { path: '/epidemic/nucleic', breadcrumbName: '核酸预约' },
   ]);
 
+  useEffect(() => {
+    form.setFieldsValue({ name: user?.name, id: user?.id });
+  }, [user]);
+
   const onFinish = async (values: any) => {
     try {
       await reserve({
@@ -55,7 +59,7 @@ const NucleicPage: React.FC = () => {
 
   const onDelete = async () => {
     try {
-      if (user?.id) {
+      if (user) {
         await remove(user.id).unwrap();
         setInfoVisible(false);
         message.success('取消成功');
@@ -64,10 +68,6 @@ const NucleicPage: React.FC = () => {
       message.error(err.message || err.status);
     }
   };
-
-  useEffect(() => {
-    form.setFieldsValue({ name: user?.name, id: user?.id });
-  }, [user]);
 
   return (
     <>

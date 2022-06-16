@@ -12,7 +12,14 @@ const unwrap = <T>(response: ApiResponse<T>) => {
 
 const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['User', 'Reservation', 'Notice', 'Help', 'Feedback'],
+  tagTypes: [
+    'User',
+    'Reservation',
+    'Notice',
+    'Help',
+    'Feedback',
+    'Appointment',
+  ],
   endpoints: build => ({
     getCurrentUser: build.query<User, void>({
       query: () => '/users/getInfo',
@@ -43,9 +50,10 @@ const apiSlice = createApi({
       invalidatesTags: ['User'],
     }),
 
-    getUserReservation: build.query<Reservation, number>({
-      query: uid => `/record/${uid}`,
-      transformResponse: (response: ApiResponse<Reservation>) => response.data,
+    getUserReservation: build.query<Reservation[], void>({
+      query: () => '/record/fetch-all',
+      transformResponse: (response: ApiResponse<Reservation[]>) =>
+        response.data,
       providesTags: ['Reservation'],
     }),
 
@@ -227,6 +235,15 @@ const apiSlice = createApi({
       query: id => `/illnessIntro/${id}`,
       transformResponse: (response: any) => response.data,
     }),
+
+    createDoctorReservation: build.mutation<void, CreateDoctorRequest>({
+      query: request => ({
+        url: `/record/insert?${stringify(request)}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: [{ type: 'Appointment', id: 'LIST' }],
+    }),
   }),
 });
 
@@ -259,4 +276,5 @@ export const {
   useGetDoctorQuery,
   useListIllnessesQuery,
   useGetIllnessQuery,
+  useCreateDoctorReservationMutation,
 } = apiSlice;

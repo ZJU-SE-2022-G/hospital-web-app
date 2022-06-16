@@ -22,6 +22,7 @@ import DoctorListPage from '../pages/doctors/DoctorListPage';
 import DoctorInfo from '../pages/doctors/DoctorInfo';
 import IllnessListPage from '../pages/illnesses/IllnessListPage';
 import IllnessInfo from '../pages/illnesses/IllnessInfo';
+import AppointmentPage from '../pages/appointment/AppointmentPage';
 
 const Routes: React.FC = () =>
   useRoutes([
@@ -44,7 +45,7 @@ const Routes: React.FC = () =>
         },
         { path: 'manage' },
         { path: 'search' },
-        { path: 'reserve' },
+        { path: 'reserve', element: <AppointmentPage /> },
         {
           path: 'reserves',
           children: [{ index: true }, { path: ':reserveId' }],

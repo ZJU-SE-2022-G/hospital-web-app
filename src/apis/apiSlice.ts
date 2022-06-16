@@ -12,7 +12,7 @@ const unwrap = <T>(response: ApiResponse<T>) => {
 
 const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['User', 'Notice', 'Help', 'Feedback'],
+  tagTypes: ['User', 'Nucleic', 'Vaccine', 'Notice', 'Help', 'Feedback'],
   endpoints: build => ({
     getCurrentUser: build.query<User, void>({
       query: () => '/users/getInfo',
@@ -170,6 +170,13 @@ const apiSlice = createApi({
       }),
     }),
 
+    getNucleicReservation: build.query<NucleicReservation, string>({
+      query: id => `/nucTestApp/query/${id}`,
+      transformResponse: (response: ApiResponse<NucleicReservation>) =>
+        response.data,
+      providesTags: ['Nucleic'],
+    }),
+
     createNucleicReservation: build.mutation<
       void,
       CreateNucleicReservationRequest
@@ -179,6 +186,20 @@ const apiSlice = createApi({
         method: 'POST',
       }),
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['Nucleic'],
+    }),
+
+    deleteNucleicReservation: build.mutation<void, string>({
+      query: id => `/nucTestApp/delete/${id}`,
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['Nucleic'],
+    }),
+
+    getVaccineReservation: build.query<VaccineReservation, string>({
+      query: id => `/vacApp/query/${id}`,
+      transformResponse: (response: ApiResponse<VaccineReservation>) =>
+        response.data,
+      providesTags: ['Vaccine'],
     }),
 
     createVaccineReservation: build.mutation<
@@ -190,6 +211,13 @@ const apiSlice = createApi({
         method: 'POST',
       }),
       transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['Vaccine'],
+    }),
+
+    deleteVaccineReservation: build.mutation<void, string>({
+      query: id => `/vacApp/delete/${id}`,
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: ['Vaccine'],
     }),
 
     listDepartments: build.query<any, void>({
@@ -244,8 +272,12 @@ export const {
   useCreateFeedbackMutation,
   useUpdateFeedbackMutation,
   useGetEpidemicMapQuery,
+  useGetNucleicReservationQuery,
   useCreateNucleicReservationMutation,
+  useDeleteNucleicReservationMutation,
+  useGetVaccineReservationQuery,
   useCreateVaccineReservationMutation,
+  useDeleteVaccineReservationMutation,
   useListDepartmentsQuery,
   useGetDepartmentQuery,
   useListDoctorsQuery,

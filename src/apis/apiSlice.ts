@@ -67,6 +67,12 @@ const apiSlice = createApi({
       invalidatesTags: ['Appointment'],
     }),
 
+    listDoctorWorkdays: build.query<Workday[], string>({
+      query: id => `/workday/doctor/${id}`,
+      transformResponse: (response: ApiResponse<Workday[]>) => response.data,
+      providesTags: ['Appointment'],
+    }),
+
     listNotices: build.query<Page<Notice>, ListNoticesRequest>({
       query: request => `/notice/page?${stringify(request)}`,
       transformResponse: (response: ApiResponse<Page<Notice>>) => response.data,
@@ -285,6 +291,7 @@ export const {
   useDeleteSessionMutation,
   useListAppointmentsQuery,
   useCreateAppointmentMutation,
+  useListDoctorWorkdaysQuery,
   useListNoticesQuery,
   useGetNoticeQuery,
   useCreateNoticeMutation,

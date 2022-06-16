@@ -1,8 +1,9 @@
 import React from 'react';
-import { PageHeader, Spin, Descriptions, List, Space } from 'antd';
+import { PageHeader, Spin, Descriptions, List, Popover, Space } from 'antd';
 import {
   useGetCurrentUserQuery,
   useListAppointmentsQuery,
+  useListDoctorsQuery,
 } from '../../apis/apiSlice';
 import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
@@ -11,6 +12,7 @@ const UserInfoPage: React.FC = () => {
   const { data: user, isFetching: userFetching } = useGetCurrentUserQuery();
   const { data: appointments, isFetching: appointmentsFetching } =
     useListAppointmentsQuery();
+  const { data: doctors } = useListDoctorsQuery();
   const breadcrumb = useBreadcrumbProps([
     { path: '/', breadcrumbName: '首页' },
     { path: '/user', breadcrumbName: '个人信息' },
@@ -28,22 +30,39 @@ const UserInfoPage: React.FC = () => {
           <Descriptions.Item label="姓名">{user?.name}</Descriptions.Item>
           <Descriptions.Item label="手机号">{user?.phone}</Descriptions.Item>
           <Descriptions.Item label="身份证号">{user?.id}</Descriptions.Item>
-          <Descriptions.Item label="已预约就诊信息">
+          <Descriptions.Item label="已预约就诊信息（点击查看详情）">
             <List
-              dataSource={appointments
-                ?.filter(appointment => appointment.uid === user?.uid)
-                .map(appointment => (
-                  <Space>
-                    <span>
+              dataSource={appointments?.filter(
+                appointment => appointment.uid === user?.uid,
+              )}
+              renderItem={item => {
+                const doctor = doctors?.find(
+                  doctor => doctor.docId === item.did,
+                );
+                const content = (
+                  <div>
+                    <p>医生：{doctor?.docName}</p>
+                    <p>号码：{item.serialnumber}</p>
+                    <p>
                       操作时间：
-                      {appointment.orderData.substring(0, 10) +
+                      {item.orderData.substring(0, 10) +
                         ' ' +
-                        appointment.orderData.substring(11, 16)}
-                    </span>
-                    /<span>预约日期：{appointment.visitData}</span>
-                  </Space>
-                ))}
-              renderItem={item => <List.Item>{item}</List.Item>}
+                        item.orderData.substring(11, 16)}
+                    </p>
+                  </div>
+                );
+
+                return (
+                  <List.Item>
+                    <Popover content={content}>
+                      <Space>
+                        <span>科室：{doctor?.departmantName}</span>/
+                        <span>预约日期：{item.visitData}</span>
+                      </Space>
+                    </Popover>
+                  </List.Item>
+                );
+              }}
             />
           </Descriptions.Item>
         </Descriptions>

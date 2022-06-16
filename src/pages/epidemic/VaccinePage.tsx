@@ -159,9 +159,8 @@ const VaccinePage: React.FC = () => {
             >
               <DatePicker
                 disabledDate={current =>
-                  current &&
-                  (current < moment().endOf('day') ||
-                    current > moment().add(7, 'days').endOf('day'))
+                  current < moment().endOf('day') ||
+                  current > moment().add(7, 'days').endOf('day')
                 }
               />
             </Form.Item>

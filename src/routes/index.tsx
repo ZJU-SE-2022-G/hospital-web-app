@@ -84,7 +84,7 @@ const Routes: React.FC = () =>
           path: 'departments',
           element: <DepartmentListPage />,
           children: [
-            { index: true, element: <span>请选择科室</span> },
+            { index: true, element: '请选择科室' },
             { path: ':departmentId', element: <DepartmentInfo /> },
           ],
         },
@@ -92,7 +92,7 @@ const Routes: React.FC = () =>
           path: 'doctors',
           element: <DoctorListPage />,
           children: [
-            { index: true, element: <span>请选择医生</span> },
+            { index: true, element: '请选择医生' },
             { path: ':doctorId', element: <DoctorInfo /> },
           ],
         },
@@ -100,7 +100,7 @@ const Routes: React.FC = () =>
           path: 'illnesses',
           element: <IllnessListPage />,
           children: [
-            { index: true, element: <span>请选择病情</span> },
+            { index: true, element: '请选择病情' },
             { path: ':illnessId', element: <IllnessInfo /> },
           ],
         },

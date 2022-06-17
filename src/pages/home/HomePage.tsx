@@ -5,6 +5,8 @@ import { Row, Col, Carousel, List, Typography, Tag } from 'antd';
 import { useListNoticesQuery } from '../../apis/apiSlice';
 import NavigateButton from '../../components/NavigateButton';
 import carousel1Img from '../../assets/home/carousel1.png';
+import carousel2Img from '../../assets/home/carousel2.png';
+import carousel3Img from '../../assets/home/carousel3.png';
 import doctorImg from '../../assets/home/doctor.svg';
 import departmentImg from '../../assets/home/department.svg';
 import noticeImg from '../../assets/home/notice.svg';
@@ -20,7 +22,7 @@ const HomePage: React.FC = () => {
     query: '',
   });
 
-  const imgs = [carousel1Img, carousel1Img];
+  const imgs = [carousel1Img, carousel2Img, carousel3Img];
 
   const contents = imgs.map(img => (
     <div key={img}>
@@ -34,7 +36,7 @@ const HomePage: React.FC = () => {
     <>
       <Row>
         <Col span="24">
-          <Carousel>{contents}</Carousel>
+          <Carousel autoplay>{contents}</Carousel>
         </Col>
       </Row>
       <Row>

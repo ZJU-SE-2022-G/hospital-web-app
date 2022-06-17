@@ -20,12 +20,12 @@ const FeedbackSendPage: React.FC = () => {
 
   const onFinish = async (values: any) => {
     try {
-      await send({
+      const feedback = await send({
         problemType: values['type'],
         title: values['title'],
         problem: values['content'],
       }).unwrap();
-      navigate('/');
+      navigate(`/feedbacks/${feedback.id}`);
       message.success('提交成功');
     } catch (err: any) {
       message.error(err.message || err.status);
@@ -48,7 +48,7 @@ const FeedbackSendPage: React.FC = () => {
               rules={[{ required: true, message: '请选择问题类型' }]}
             >
               <Radio.Group
-                name="problem-type"
+                name="type"
                 options={['信息有误', '使用不便', '其他意见']}
               />
             </Form.Item>

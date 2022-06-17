@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { PageHeader, List, Typography, Tag } from 'antd';
-import { useListFeedbacksQuery } from '../../apis/apiSlice';
+import { PageHeader, Checkbox, List, Typography, Tag } from 'antd';
+import {
+  useGetCurrentUserQuery,
+  useListFeedbacksQuery,
+} from '../../apis/apiSlice';
 import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
 
@@ -10,9 +13,12 @@ const { Text } = Typography;
 
 const FeedbackListPage: React.FC = () => {
   const [current, setCurrent] = useState(1);
+  const [showMe, setShowMe] = useState(false);
+  const { data: user } = useGetCurrentUserQuery();
   const { data, isFetching } = useListFeedbacksQuery({
     p: current,
     pageSize: 10,
+    uid: showMe ? user?.uid : undefined,
   });
   const breadcrumb = useBreadcrumbProps([
     { path: '/', breadcrumbName: '首页' },
@@ -24,6 +30,13 @@ const FeedbackListPage: React.FC = () => {
       className={styles.largePage}
       title="反馈列表"
       breadcrumb={breadcrumb}
+      extra={
+        user && (
+          <Checkbox onChange={e => setShowMe(e.target.checked)}>
+            只看我的
+          </Checkbox>
+        )
+      }
     >
       <List
         size="small"

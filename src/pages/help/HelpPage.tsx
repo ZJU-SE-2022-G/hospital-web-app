@@ -21,10 +21,10 @@ import {
 import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import styles from '../../styles/Page.module.css';
 
-const { confirm } = Modal;
 const { Search } = Input;
 const { Panel } = Collapse;
 const { Text } = Typography;
+const { confirm } = Modal;
 
 const HelpPage: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -80,7 +80,7 @@ const HelpPage: React.FC = () => {
           loading={isFetching}
           onSearch={value => setSearch(value)}
         />,
-        user?.isAdmin && !formVisible ? (
+        user?.isAdmin ? (
           <Button
             key="create"
             type="primary"

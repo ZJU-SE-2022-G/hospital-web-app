@@ -43,7 +43,7 @@ const NoticeUpdatePage: React.FC = () => {
       title="更新公告"
       breadcrumb={breadcrumb}
     >
-      {user?.isAdmin && data ? (
+      {data && user?.isAdmin ? (
         <TitleContentForm
           name="notice"
           titleLabel="公告标题"

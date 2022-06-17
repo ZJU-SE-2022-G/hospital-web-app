@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form, Input, Button } from 'antd';
 import Editor from './Editor';
 import styles from '../styles/Page.module.css';
@@ -7,9 +7,9 @@ interface TitleContentFormProps {
   name: string;
   extra?: React.ReactNode;
   titleLabel: string;
-  titleDefaultValue?: string;
+  titleInitialValue?: string;
   contentLabel: string;
-  contentDefaultValue?: string;
+  contentInitialValue?: string;
   submitLabel: string;
   loading: boolean;
   onFinish: (values: any) => void;
@@ -20,9 +20,9 @@ const TitleContentForm: React.FC<TitleContentFormProps> = ({
   name,
   extra,
   titleLabel,
-  titleDefaultValue,
+  titleInitialValue,
   contentLabel,
-  contentDefaultValue,
+  contentInitialValue,
   submitLabel,
   loading,
   onFinish,
@@ -30,21 +30,16 @@ const TitleContentForm: React.FC<TitleContentFormProps> = ({
 }) => {
   const [form] = Form.useForm();
 
-  useEffect(
-    () =>
-      form.setFieldsValue({
-        title: titleDefaultValue,
-        content: contentDefaultValue,
-      }),
-    [],
-  );
-
   return (
     <Form
       form={form}
       name={name}
       labelAlign="left"
       labelCol={{ sm: { span: 6 }, md: { span: 4 }, lg: { span: 3 } }}
+      initialValues={{
+        title: titleInitialValue,
+        content: contentInitialValue,
+      }}
       validateTrigger="onBlur"
       onFinish={onFinish}
     >
@@ -61,7 +56,7 @@ const TitleContentForm: React.FC<TitleContentFormProps> = ({
         label={contentLabel}
         rules={[{ required: true, message: `请输入${contentLabel}` }]}
       >
-        <Editor initialValue={contentDefaultValue} />
+        <Editor initialValue={contentInitialValue} />
       </Form.Item>
       <Form.Item label=" " colon={false}>
         <Button

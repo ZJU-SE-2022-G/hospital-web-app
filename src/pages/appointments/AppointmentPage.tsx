@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -6,11 +6,12 @@ import {
   Form,
   Input,
   InputNumber,
+  Radio,
+  Cascader,
   DatePicker,
+  Tooltip,
   Button,
   message,
-  Cascader,
-  Radio,
 } from 'antd';
 import {
   useGetCurrentUserQuery,
@@ -35,10 +36,6 @@ const AppointmentPage: React.FC = () => {
     { path: '/', breadcrumbName: '首页' },
     { path: '/reserve', breadcrumbName: '门诊预约' },
   ]);
-
-  useEffect(() => {
-    form.setFieldsValue({ name: user?.name, id: user?.id });
-  }, [user]);
 
   const options = departments?.map(department => ({
     value: department.name,
@@ -81,6 +78,7 @@ const AppointmentPage: React.FC = () => {
           name="appoint"
           labelAlign="left"
           labelCol={{ span: 6 }}
+          initialValues={{ name: user.name, id: user.id }}
           validateTrigger="onBlur"
           onFinish={onFinish}
         >
@@ -144,11 +142,43 @@ const AppointmentPage: React.FC = () => {
             rules={[{ required: true, message: '请选择预约日期' }]}
           >
             <DatePicker
-              disabledDate={current =>
-                !workdays?.find(
+              inputReadOnly
+              dateRender={current => {
+                const workday = workdays?.find(
                   workday => workday.workTime === current.format('YYYY-MM-DD'),
-                )
-              }
+                );
+                const remaining =
+                  workday && workday.totalNum - workday.orderedNum;
+                return (
+                  <Tooltip
+                    overlay={remaining ? `剩余号源：${remaining}` : '暂无号源'}
+                  >
+                    <div
+                      className="ant-picker-cell-inner"
+                      style={
+                        remaining
+                          ? {
+                              background:
+                                remaining <= 5
+                                  ? '#ff4d4f'
+                                  : remaining <= 10
+                                  ? '#ffc53d'
+                                  : '#73d13d',
+                            }
+                          : undefined
+                      }
+                    >
+                      {current.format('D')}
+                    </div>
+                  </Tooltip>
+                );
+              }}
+              disabledDate={current => {
+                const workday = workdays?.find(
+                  workday => workday.workTime === current.format('YYYY-MM-DD'),
+                );
+                return !workday || workday.orderedNum >= workday.totalNum;
+              }}
             />
           </Form.Item>
           <Form.Item label=" " colon={false}>

@@ -47,9 +47,9 @@ const NoticeUpdatePage: React.FC = () => {
         <TitleContentForm
           name="notice"
           titleLabel="公告标题"
-          titleDefaultValue={data.title}
+          titleInitialValue={data.title}
           contentLabel="公告内容"
-          contentDefaultValue={data.content}
+          contentInitialValue={data.content}
           submitLabel="更新"
           loading={isLoading}
           onFinish={onFinish}

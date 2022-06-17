@@ -41,17 +41,19 @@ const UserInfoPage: React.FC = () => {
                 );
                 const content = (
                   <div>
+                    <p>科室：{doctor?.departmantName}</p>
                     <p>医生：{doctor?.docName}</p>
+                    <p>预约日期：{item.visitData}</p>
                     <p>号码：{item.serialnumber}</p>
                     <p>
                       操作时间：
-                      {item.orderData.substring(0, 10) +
-                        ' ' +
-                        item.orderData.substring(11, 16)}
+                      {`${item.orderData.substring(
+                        0,
+                        10,
+                      )} ${item.orderData.substring(11, 16)}`}
                     </p>
                   </div>
                 );
-
                 return (
                   <List.Item>
                     <Popover content={content}>

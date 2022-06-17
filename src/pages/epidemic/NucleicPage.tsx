@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
@@ -37,10 +37,6 @@ const NucleicPage: React.FC = () => {
     { path: '/', breadcrumbName: '首页' },
     { path: '/epidemic/nucleic', breadcrumbName: '核酸预约' },
   ]);
-
-  useEffect(() => {
-    form.setFieldsValue({ name: user?.name, id: user?.id });
-  }, [user]);
 
   const onFinish = async (values: any) => {
     try {
@@ -93,6 +89,7 @@ const NucleicPage: React.FC = () => {
             name="nucleic"
             labelAlign="left"
             labelCol={{ span: 6 }}
+            initialValues={{ name: user.name, id: user.id }}
             validateTrigger="onBlur"
             onFinish={onFinish}
           >
@@ -133,6 +130,7 @@ const NucleicPage: React.FC = () => {
               rules={[{ required: true, message: '请选择检测日期' }]}
             >
               <DatePicker
+                inputReadOnly
                 disabledDate={current =>
                   current < moment().endOf('day') ||
                   current > moment().add(7, 'days').endOf('day')

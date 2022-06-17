@@ -108,7 +108,10 @@ const apiSlice = createApi({
         body: request,
       }),
       transformResponse: (response: ApiResponse<Notice>) => unwrap(response),
-      invalidatesTags: (result, error, arg) => [{ type: 'Notice', id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Notice', id: 'LIST' },
+        { type: 'Notice', id: arg.id },
+      ],
     }),
 
     deleteNotice: build.mutation<void, DeleteNoticeRequest>({
@@ -185,6 +188,7 @@ const apiSlice = createApi({
       }),
       transformResponse: (response: ApiResponse<Feedback>) => unwrap(response),
       invalidatesTags: (result, error, arg) => [
+        { type: 'Feedback', id: 'LIST' },
         { type: 'Feedback', id: arg.id },
       ],
     }),

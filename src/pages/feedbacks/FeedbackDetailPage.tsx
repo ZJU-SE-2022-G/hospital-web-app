@@ -1,33 +1,39 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import {
   PageHeader,
   Typography,
+  Button,
   Skeleton,
   Divider,
-  Button,
+  Modal,
   message,
 } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import Viewer from '../../components/Viewer';
 import Editor from '../../components/Editor';
 import {
   useGetCurrentUserQuery,
   useGetFeedbackQuery,
   useUpdateFeedbackMutation,
+  useDeleteFeedbackMutation,
 } from '../../apis/apiSlice';
 import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import pageStyles from '../../styles/Page.module.css';
 import styles from './FeedbackDetailPage.module.css';
 
 const { Title, Text } = Typography;
+const { confirm } = Modal;
 
 const FeedbackDetailPage: React.FC = () => {
   const [answer, setAnswer] = useState('');
+  const navigate = useNavigate();
   const { feedbackId = '' } = useParams();
   const { data: user } = useGetCurrentUserQuery();
   const { data, isFetching } = useGetFeedbackQuery({ id: feedbackId });
   const [update, { isLoading }] = useUpdateFeedbackMutation();
+  const [remove] = useDeleteFeedbackMutation();
   const breadcrumb = useBreadcrumbProps([
     { path: '/', breadcrumbName: '首页' },
     { path: '/feedbacks', breadcrumbName: '反馈列表' },
@@ -42,6 +48,20 @@ const FeedbackDetailPage: React.FC = () => {
       message.error(err.message || err.status);
     }
   };
+
+  const onDelete = () =>
+    confirm({
+      title: '确认删除该反馈？',
+      onOk: async () => {
+        try {
+          await remove({ id: feedbackId }).unwrap();
+          navigate('/feedbacks');
+          message.success('删除成功');
+        } catch (err: any) {
+          message.error(err.message || err.status);
+        }
+      },
+    });
 
   return (
     <PageHeader
@@ -59,6 +79,18 @@ const FeedbackDetailPage: React.FC = () => {
         )
       }
       breadcrumb={breadcrumb}
+      extra={
+        data && (user?.isAdmin || user?.uid === data.askerId) ? (
+          <Button
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={onDelete}
+          >
+            删除反馈
+          </Button>
+        ) : undefined
+      }
     >
       <Skeleton active loading={isFetching}>
         {data ? (

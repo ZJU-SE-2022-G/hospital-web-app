@@ -13,8 +13,8 @@ import { useBreadcrumbProps } from '../../utils/breadcrumb';
 import pageStyles from '../../styles/Page.module.css';
 import styles from './NoticeDetailPage.module.css';
 
-const { confirm } = Modal;
 const { Title, Text } = Typography;
+const { confirm } = Modal;
 
 const NoticeDetailPage: React.FC = () => {
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ const NoticeDetailPage: React.FC = () => {
       }
       breadcrumb={breadcrumb}
       extra={
-        user?.isAdmin && data
+        data && user?.isAdmin
           ? [
               <Link key="update" to={`/notices/edit/${noticeId}`}>
                 <Button type="primary" icon={<EditOutlined />}>
@@ -67,6 +67,7 @@ const NoticeDetailPage: React.FC = () => {
                 </Button>
               </Link>,
               <Button
+                key="delete"
                 type="primary"
                 danger
                 icon={<DeleteOutlined />}

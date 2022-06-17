@@ -16,6 +16,7 @@ declare interface Feedback {
 declare interface ListFeedbacksRequest {
   p: number;
   pageSize: number;
+  uid?: number;
 }
 
 declare interface GetFeedbackRequest {
@@ -31,4 +32,8 @@ declare interface CreateFeedbackRequest {
 declare interface UpdateFeedbackRequest {
   id: string;
   answer: string;
+}
+
+declare interface DeleteFeedbackRequest {
+  id: string;
 }

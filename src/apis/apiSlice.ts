@@ -189,6 +189,18 @@ const apiSlice = createApi({
       ],
     }),
 
+    deleteFeedback: build.mutation<void, DeleteFeedbackRequest>({
+      query: request => ({
+        url: `/problem-feedback/deleteById?${stringify(request)}`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: ApiResponse<void>) => unwrap(response),
+      invalidatesTags: (result, error, arg) => [
+        { type: 'Feedback', id: 'LIST' },
+        { type: 'Feedback', id: arg.id },
+      ],
+    }),
+
     getEpidemicMap: build.query<any, void>({
       query: () => '/epidemic/map',
       transformResponse: (response: any) => ({
@@ -304,6 +316,7 @@ export const {
   useGetFeedbackQuery,
   useCreateFeedbackMutation,
   useUpdateFeedbackMutation,
+  useDeleteFeedbackMutation,
   useGetEpidemicMapQuery,
   useGetNucleicReservationQuery,
   useCreateNucleicReservationMutation,

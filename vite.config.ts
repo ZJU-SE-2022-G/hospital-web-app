@@ -12,7 +12,7 @@ export default defineConfig({
         rewrite: () => '/news/wap/fymap2020_data.d.json',
       },
       '/api': {
-        target: 'http://172.24.160.1:8080',
+        target: 'http://172.26.208.1:8080',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, ''),
       },

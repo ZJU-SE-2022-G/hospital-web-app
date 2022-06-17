@@ -75,7 +75,7 @@ const NoticeDetailPage: React.FC = () => {
                 删除公告
               </Button>,
             ]
-          : []
+          : undefined
       }
     >
       <Skeleton active loading={isFetching}>

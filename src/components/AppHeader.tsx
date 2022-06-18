@@ -56,10 +56,10 @@ const AppHeader: React.FC = () => {
   return (
     <Header className={styles.header}>
       <Row>
-        <Col span="18">
+        <Col span={18}>
           <Link to="/">
             <Space className={styles.link}>
-              <img height="50" src={favicon} />
+              <img height={50} src={favicon} />
               <div className={styles.titleWrapper}>
                 <Title className={styles.title} level={4}>
                   医院网上预约系统
@@ -71,7 +71,7 @@ const AppHeader: React.FC = () => {
             </Space>
           </Link>
         </Col>
-        <Col className={styles.buttons} span="6">
+        <Col className={styles.buttons} span={6}>
           {user ? (
             <Dropdown overlay={menu}>
               <Button shape="round" ghost>

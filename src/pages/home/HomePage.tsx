@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
   const contents = imgs.map(img => (
     <div key={img}>
       <div className={styles.content}>
-        <img height="300" src={img} />
+        <img height={300} src={img} />
       </div>
     </div>
   ));
@@ -35,12 +35,12 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Row>
-        <Col span="24">
+        <Col span={24}>
           <Carousel autoplay>{contents}</Carousel>
         </Col>
       </Row>
       <Row>
-        <Col className={styles.noticeOuterWrapper} span="24">
+        <Col className={styles.noticeOuterWrapper} span={24}>
           <div className={styles.noticeInnerWrapper}>
             <Title className={styles.noticeTitle} level={4}>
               院内公告

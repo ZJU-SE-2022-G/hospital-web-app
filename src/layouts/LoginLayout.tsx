@@ -14,7 +14,7 @@ const LoginLayout: React.FC<LoginLayoutProps> = ({ children }) => (
   <div className={styles.page}>
     <div className={styles.layout}>
       <div className={styles.left}>
-        <img width="300" src={background} />
+        <img width={300} src={background} />
       </div>
       <div className={styles.right}>
         <div className={styles.header}>
